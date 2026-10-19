@@ -12,7 +12,7 @@
 
 ## 🚀 Universal 1-Line Installation
 
-Clone this repo into **your host's skill root** (same idea as [agent-skills](https://github.com/napattan/agent-skills/releases/tag/v1.1.0)).
+Clone this repo into **your host's skill root** (same idea as [boostx](https://github.com/napattan/boostx/releases/tag/v3.0.0)).
 
 | Host | Typical skill root |
 |:---|:---|
@@ -86,7 +86,7 @@ mcp-bridges/
 ## 🔗 Related Toolkits
 
 Looking for high-discipline developer protocols and agent reasoning tools? Check out:
-* **[agent-skills v1.1.0](https://github.com/napattan/agent-skills/releases/tag/v1.1.0)**: Portable `/boostx`, `/brief`, `/create-skill`, `/update-doc`, `/publish-audit`, `/publish-qgis`.
+* **[boostx v3.0.0](https://github.com/napattan/boostx/releases/tag/v3.0.0)**: Composable 12-skill AI agent ecosystem (`/boostx`, `/briefx`, `/contextx`, `/create-skillx`, `/deep-researchx`, `/kickoffx`, `/obsidianx`, `/planx`, `/publishx-audit`, `/publishx-qgis`, `/researchx`, `/syncx`).
 
 ---
 

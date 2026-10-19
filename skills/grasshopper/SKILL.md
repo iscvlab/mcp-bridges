@@ -1,9 +1,9 @@
 ---
 name: grasshopper
 description: >-
-  Parametric definition authoring, component placement & graph wiring, data tree alignment, solver execution, and Grasshopper automation via Rhino MCP server (g1_* tools & Python/C#).
-  Use when the user asks to create, debug, wire, or solve Grasshopper definitions, manage data trees (Graft/Flatten/Simplify), or mentions /grasshopper, /gh, "grasshopper", or "GH".
-  Do NOT use for standalone Rhino document layer management or 3D NURBS modeling without a canvas (use /rhino instead), or QGIS GIS cartography (use /qgis instead).
+  Parametric definition authoring, component wiring, data tree surgery, and solver automation via Rhino MCP g1_* tools and Python/C# (/grasshopper, /gh).
+  Use when creating, debugging, wiring, or solving Grasshopper definitions, or managing data trees (Graft/Flatten/Simplify).
+  Do NOT use for standalone Rhino 3D modeling without a canvas (/rhino) or QGIS cartography (/qgis).
 ---
 
 # Grasshopper Parametric Engine & Automation Workflow (/grasshopper)

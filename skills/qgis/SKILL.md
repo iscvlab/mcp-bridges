@@ -48,7 +48,7 @@ Before executing any QGIS operation, perform the following verification steps:
    - **Web / Macro GeoJSON Protocol**: Use geographic CRS (`EPSG:4326` WGS84) for web mapping (Leaflet, Mapbox GL, Turf.js).
 
 4. **Token-Budgeted Operations Guardrail (Anti-Bloat Principle)**:
-   - **Bounded Scope**: Never execute unbounded queries across all 81 layers (e.g. avoid calling full `get_layers` or unconstrained `get_layer_tree` across the entire project). Instead, use `find_layer(name="...")` or inspect strictly the target group.
+   - **Bounded Scope (Zero Full-Project Dumps)**: Never execute unbounded discovery calls across the canvas root (e.g. avoid calling full unfiltered `get_layers()`, unconstrained root `get_layer_tree()`, or dumping `mapLayers().values()`). Treat the layer tree as an indexed database: use `find_layer(name="...")` or inspect strictly the immediate target group.
    - **Strict Attribute Limits**: When inspecting layer attributes or schemas, ALWAYS set `limit=3` (or `limit=5`) in `get_layer_features`. Large layers (e.g. LDD 11,028 polygons) will return tens of megabytes of raw geometry and text, causing immediate token depletion or agent timeout.
    - **No Full XML Dumps**: When reading `.qgz` project files, parse targeted XML tags (`ElementTree`) rather than printing raw uncompressed XML strings into the agent prompt context.
 
@@ -71,7 +71,7 @@ Before executing any operation, identify your **Task Archetype** below. Execute 
 ### Mode A: Project & Layer Discovery / Spatial QA
 Use this mode to inspect canvas state, schema structures, layer hierarchies, and spatial integrity with bounded token consumption:
 1. **Explore Structure (Scope-Bounded)**:
-   - Use `find_layer` with exact name or regex to locate specific layers without dumping all 81 layers.
+   - Use `find_layer` with exact name or regex to locate specific layers without dumping the full project layer tree.
    - To inspect a group, query only that specific group node rather than the full project tree.
 2. **Inspect Attributes & Schemas (Token-Capped)**:
    - Retrieve sample feature records and schema using `get_layer_features(layer_name="...", limit=3)`.
@@ -161,12 +161,14 @@ Last resort. Prefer MCP tools from Modes A–E. `execute_code` is for processing
 
 When rendering density distributions (Parks, Odor Plumes, Noise dBA, Demographics) for 3D exploded axonometric plates:
 
-1. **Balanced Weight Formula (Square-Root + Base Boost)**:
-   - Use `sqrt(coalesce(field_val, default)) + base_offset` (e.g. `sqrt(area_rai) + 3.0`) so micro-nodes are not drowned out by macro-anchors.
-2. **Metric Projected KDE (EPSG:32647 UTM Zone 47N)**:
-   - Execute `qgis:heatmapkerneldensityestimation` in metric units (Radius `3,000m - 3,500m`, Pixel `60m - 80m`, Quartic kernel).
-3. **Discrete Reclassification (`native:reclassifybytable`)**:
-   - Reclassify into exactly 4–5 discrete integer tiers `[1..5]`. Set background/void threshold to `0` (transparent).
+1. **Academic Rigor & Zero-Bias Invariant (Strict Prohibition on Fake Weighting)**:
+   - **Never Inject Arbitrary Multipliers**: Never artificially weight spatial points (e.g. inflating complaint counts around On Nut) to force a thesis site into a pre-determined visual summit.
+   - **Scale-Appropriate Bandwidth Selection**: Always select KDE search radius (bandwidth `h`) based on physical phenomena at the active scale (e.g. macro atmospheric odor transport across `3,500m - 4,000m` for citywide 50km industrial plumes, vs `500m - 1,000m` for pedestrian walkability). Macro bandwidth naturally smooths high-frequency local street noise without arbitrary manual filtering.
+   - **Dual Spatial Reality Preservation**: Keep Point Density (KDE continuous physical intensity per km²) distinct from Administrative Aggregation (Choropleth total municipal volume per district polygon). Never distort one to mimic the other.
+2. **Metric Projected KDE (`EPSG:32647` UTM Zone 47N)**:
+   - Execute `qgis:heatmapkerneldensityestimation` in metric units (Radius `3,500m - 4,000m` for citywide macro plumes, Pixel `60m - 100m`, Quartic kernel).
+3. **Empirical Percentile Reclassification (`native:reclassifybytable`)**:
+   - Reclassify into exactly 4–5 discrete integer tiers `[1..5]` based on empirical distribution percentiles (e.g. P50, P75, P90, P95). Set background/void threshold to `0` (transparent).
 4. **Vector Polygonization (`gdal:polygonize`)**:
    - Polygonize the reclassified raster to guarantee **strictly 1 clean outer contour border per tier** with zero internal sub-lines.
 5. **Geometric Curve Smoothing (`native:smoothgeometry`)**:
@@ -219,12 +221,13 @@ To prevent missing details (transparency mismatches, duplicate nodes, naming dis
 
 ### 3.1 Detailed Verification Checklist & Rules of Thumb
 
-1. **Dual-Transparency Rule (Global Layer Opacity vs Symbol Fill Alpha)**:
-   - Visual transparency in QGIS has two distinct levels:
+1. **Dual-Transparency & Opacity Invariants**:
+   - **Presentation & Axonometric Layers (Mandatory 100% Solid)**: All subdistrict boundary plates, territorial polygons, and presentation thematic layers **MUST have 100% solid opacity (`layer.opacity() == 1.0` and symbol fill `alpha == 255`)**. Zero semi-transparency. Semi-transparency produces muddy blending and washed-out fills when exported to transparent PNGs for presentation decks.
+   - **Internal GIS Reference / Working Overlays**: Visual transparency in QGIS has two distinct levels:
      - **Global Layer Opacity** (`layer.opacity()`): Controls overall rendering rasterization (0.0 = invisible, 1.0 = full). Set via `set_layer_property(property="opacity", value=1.0)`.
      - **Symbol Fill Alpha** (`color="r,g,b,alpha"` in QML / symbol): Controls polygon fill transparency. The standard for urban land use/zoning overlays is `alpha="220"` (~86% fill opacity), which allows underlying satellite orthomosaics and street networks to read clearly while retaining vivid classification colors.
-     - **Stroke Alpha**: Must remain solid (`alpha="255"`), so polygon parcel boundaries stay crisp and sharp.
-   - **Never audit only one of them**: If `layer.opacity()` is 1.0 but QML alpha is 255, the layer will look opaque and block the base map. If `layer.opacity()` is 0.5 and QML alpha is 120, the layer will look washed out. Harmonize both.
+     - **Stroke Alpha**: Must always remain solid (`alpha="255"`), so polygon parcel boundaries stay crisp and sharp.
+   - **Never audit only one of them**: Always verify both `layer.opacity()` and symbol fill alpha. Harmonize both.
 
 2. **Single-Node Invariant (Zero Duplicate Legend Entries)**:
    - When adding a layer or moving it into a group, ensure there is exactly 1 tree node in the legend:
@@ -294,7 +297,6 @@ print(f"Layer: {layer.name()} | Nodes: {len(nodes)} | CRS: {layer.crs().authid()
 7. **Strict Cross-Platform Relative Path Standard**:
    - Never commit or serialize machine-specific absolute paths (`C:\Users\...` or `/Users/...`) into `.qgz` project files. All datasources must resolve via relative paths (`./layers/...`, `../01_site_analysis/...`).
 8. **Token Depletion Prevention Guardrail**:
-   - **Scope-bound everything**: Look at 1 sibling, not all 81 layers.
+   - **Scope-bound everything**: Look at 1 representative sibling in the destination group (zero unbounded project layer dumps).
    - **Always use `limit=3`** on feature inspections.
    - **Use 1-line probe scripts** rather than dumping full XML or multi-page tool outputs.
-

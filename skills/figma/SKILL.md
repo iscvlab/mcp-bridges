@@ -35,12 +35,12 @@ Before executing any sync operations, perform the following verification steps:
 2. **Check Target HTML File**:
    - Confirm the target HTML file exists in the workspace (e.g., `thesis_architecture.html` or dashboard `index.html`).
 
-3. **Check Local HTTP Server Status**:
-   - Check if a local server is running on port 8765.
-   - Launch script:
-     - **macOS / Linux**: `./serve.sh` (or `python3 -m http.server 8765`)
-     - **Windows**: `serve.bat` (or `serve.ps1`)
-   - If no server is running, launch it in the background so local pages can be served to Figma plugins.
+3. **Check Local HTTP Server Status (Port 8765)**:
+   - Check if a local server is running on port 8765 (e.g., `http://127.0.0.1:8765`).
+   - **Autonomous Background Spawning**: If no server is running, the agent can launch one in the background using `run_command` (`IsDaemon: true`):
+     - **Windows**: `python -m http.server 8765` (or project `serve.bat` / background runner)
+     - **macOS / Linux**: `python3 -m http.server 8765` (or `./serve.sh`)
+   - The user never needs to launch servers manually; the agent activates it silently and automatically.
 
 ---
 
