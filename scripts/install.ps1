@@ -1,9 +1,10 @@
-# Computational Agent Skills — Universal Installer (Windows PowerShell)
-# Copies/links skills to Google Antigravity and Claude Code
+# MCP Bridges — Universal Installer (Windows PowerShell)
+# Copies the 5 creative & spatial MCP bridge skills into host skill roots on this machine.
 
 param(
     [switch]$Antigravity,
     [switch]$Claude,
+    [switch]$Grok,
     [switch]$All,
     [string]$Workspace = ""
 )
@@ -38,12 +39,14 @@ function Install-Skills([string]$TargetDir, [string]$PlatformName) {
 }
 
 # Auto-detect or use flags
-$installAll = $All.IsPresent -or (-not $Antigravity.IsPresent -and -not $Claude.IsPresent -and [string]::IsNullOrEmpty($Workspace))
+$installAll = $All.IsPresent -or (
+    -not $Antigravity.IsPresent -and -not $Claude.IsPresent -and -not $Grok.IsPresent -and [string]::IsNullOrEmpty($Workspace)
+)
 
 # 1. Google Antigravity
 $geminiDir = Join-Path $env:USERPROFILE ".gemini\config\skills"
 if ($installAll -or $Antigravity.IsPresent -or (Test-Path (Join-Path $env:USERPROFILE ".gemini"))) {
-    Install-Skills $geminiDir "Google Antigravity"
+    Install-Skills $geminiDir "Gemini / Antigravity"
 }
 
 # 2. Claude Code
@@ -52,10 +55,21 @@ if ($installAll -or $Claude.IsPresent -or (Test-Path (Join-Path $env:USERPROFILE
     Install-Skills $claudeDir "Claude Code"
 }
 
-# 3. Workspace
+# 3. Grok
+$grokHome = if ($env:GROK_HOME) { $env:GROK_HOME } else { Join-Path $env:USERPROFILE ".grok" }
+$grokDir = Join-Path $grokHome "skills"
+if ($installAll -or $Grok.IsPresent -or (Test-Path $grokHome)) {
+    Install-Skills $grokDir "Grok"
+}
+
+# 4. Workspace
 if (-not [string]::IsNullOrEmpty($Workspace) -and (Test-Path $Workspace)) {
     $wsTarget = Join-Path $Workspace ".agents\skills"
-    Install-Skills $wsTarget "Workspace ($Workspace)"
+    Install-Skills $wsTarget "Workspace .agents ($Workspace)"
+    $wsGrok = Join-Path $Workspace ".grok\skills"
+    if (Test-Path (Join-Path $Workspace ".grok") -or $Grok.IsPresent) {
+        Install-Skills $wsGrok "Workspace .grok ($Workspace)"
+    }
 }
 
 Write-Host "`n============================================================" -ForegroundColor Cyan

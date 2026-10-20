@@ -10,22 +10,50 @@
 
 ---
 
-## 🚀 Universal 1-Line Installation
+## 🚀 Universal Installation
 
-Clone this repo into **your host's skill root** (same idea as [boostx](https://github.com/iscvlab/boostx/releases/tag/v3.0.0)).
+Clone this repository, then run the universal installer or copy the `skills/*` folders into **your host's skill root** (same architecture as [boostx](https://github.com/iscvlab/boostx/releases/tag/v3.0.0)).
 
-| Host | Typical skill root |
-|:---|:---|
-| Claude Code | `~/.claude/skills` |
-| Grok | `$GROK_HOME/skills` or `~/.grok/skills` |
-| Gemini / Antigravity | `~/.gemini/config/skills` |
-| Project (Cursor, Codex, many IDEs) | `.agents/skills` |
+| Host | Global Skill Root | Workspace Skill Root |
+|:---|:---|:---|
+| **Claude Code** | `~/.claude/skills` | `<repo>/.claude/skills` |
+| **Grok** | `$GROK_HOME/skills` or `~/.grok/skills` | `<repo>/.grok/skills` |
+| **Gemini / Antigravity** | `~/.gemini/config/skills` | `<repo>/.agents/skills` |
+| **Cursor / Codex / Windsurf** | `~/.agents/skills` | `<repo>/.agents/skills` |
+
+### Option A: Automated Multi-Host Installer (Recommended)
+
+**Windows (PowerShell):**
+```powershell
+git clone https://github.com/iscvlab/mcp-bridges.git
+cd mcp-bridges
+.\scripts\install.ps1 -All
+```
+
+**macOS / Linux (Bash / Zsh):**
+```bash
+git clone https://github.com/iscvlab/mcp-bridges.git
+cd mcp-bridges
+chmod +x scripts/install.sh
+./scripts/install.sh --all
+```
+
+### Option B: Direct Copy into a Specific Host Root
 
 ```bash
-git clone https://github.com/iscvlab/mcp-bridges.git ~/.claude/skills
-git clone https://github.com/iscvlab/mcp-bridges.git ~/.grok/skills
-git clone https://github.com/iscvlab/mcp-bridges.git ~/.gemini/config/skills
-git clone https://github.com/iscvlab/mcp-bridges.git .agents/skills
+git clone https://github.com/iscvlab/mcp-bridges.git
+
+# Claude Code
+mkdir -p ~/.claude/skills && cp -r mcp-bridges/skills/* ~/.claude/skills/
+
+# Grok
+mkdir -p ~/.grok/skills && cp -r mcp-bridges/skills/* ~/.grok/skills/
+
+# Google Gemini / Antigravity
+mkdir -p ~/.gemini/config/skills && cp -r mcp-bridges/skills/* ~/.gemini/config/skills/
+
+# Project-local (.agents/skills)
+mkdir -p .agents/skills && cp -r mcp-bridges/skills/* .agents/skills/
 ```
 
 ---
@@ -86,7 +114,7 @@ mcp-bridges/
 ## 🔗 Related Toolkits
 
 Looking for high-discipline developer protocols and agent reasoning tools? Check out:
-* **[boostx v3.0.0](https://github.com/iscvlab/boostx/releases/tag/v3.0.0)**: Composable 12-skill AI agent ecosystem (`/boostx`, `/briefx`, `/contextx`, `/create-skillx`, `/deep-researchx`, `/kickoffx`, `/obsidianx`, `/planx`, `/publishx-audit`, `/publishx-qgis`, `/researchx`, `/syncx`).
+* **[boostx v3.0.0](https://github.com/iscvlab/boostx/releases/tag/v3.0.0)**: Composable 13-skill AI agent ecosystem (`/boostx`, `/briefx`, `/contextx`, `/create-skillx`, `/deep-researchx`, `/kickoffx`, `/layax`, `/obsidianx`, `/planx`, `/publishx-audit`, `/publishx-qgis`, `/researchx`, `/syncx`).
 
 ---
 

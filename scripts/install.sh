@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Computational Agent Skills — Universal Installer (macOS & Linux)
-# Symlinks skills to Claude Code (~/.claude/skills) and Google Antigravity (~/.gemini/config/skills)
+# MCP Bridges — Universal Installer (macOS & Linux)
+# Links the 5 MCP bridge skills into Claude Code (~/.claude/skills), Grok (~/.grok/skills), and Gemini/Antigravity (~/.gemini/config/skills)
 
 set -e
 
@@ -40,14 +40,23 @@ if [ -d "$HOME/.claude" ] || [ "$1" == "--claude" ] || [ "$1" == "--all" ]; then
     install_to "$HOME/.claude/skills" "Claude Code"
 fi
 
-# 2. Google Antigravity (~/.gemini/config/skills)
+# 2. Gemini / Antigravity (~/.gemini/config/skills)
 if [ -d "$HOME/.gemini" ] || [ "$1" == "--antigravity" ] || [ "$1" == "--all" ]; then
-    install_to "$HOME/.gemini/config/skills" "Google Antigravity"
+    install_to "$HOME/.gemini/config/skills" "Gemini / Antigravity"
 fi
 
-# 3. Target workspace if provided
+# 3. Grok (~/.grok/skills)
+GROK_ROOT="${GROK_HOME:-$HOME/.grok}"
+if [ -d "$GROK_ROOT" ] || [ "$1" == "--grok" ] || [ "$1" == "--all" ]; then
+    install_to "$GROK_ROOT/skills" "Grok"
+fi
+
+# 4. Target workspace if provided
 if [ -n "$2" ] && [ -d "$2" ]; then
-    install_to "$2/.agents/skills" "Workspace ($2)"
+    install_to "$2/.agents/skills" "Workspace .agents ($2)"
+    if [ -d "$2/.grok" ] || [ "$1" == "--grok" ]; then
+        install_to "$2/.grok/skills" "Workspace .grok ($2)"
+    fi
 fi
 
 echo ""
