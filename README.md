@@ -12,7 +12,7 @@
 
 ## 🚀 Universal 1-Line Installation
 
-Clone this repo into **your host's skill root** (same idea as [boostx](https://github.com/napattan/boostx/releases/tag/v3.0.0)).
+Clone this repo into **your host's skill root** (same idea as [boostx](https://github.com/iscvlab/boostx/releases/tag/v3.0.0)).
 
 | Host | Typical skill root |
 |:---|:---|
@@ -22,10 +22,10 @@ Clone this repo into **your host's skill root** (same idea as [boostx](https://g
 | Project (Cursor, Codex, many IDEs) | `.agents/skills` |
 
 ```bash
-git clone https://github.com/napattan/mcp-bridges.git ~/.claude/skills
-git clone https://github.com/napattan/mcp-bridges.git ~/.grok/skills
-git clone https://github.com/napattan/mcp-bridges.git ~/.gemini/config/skills
-git clone https://github.com/napattan/mcp-bridges.git .agents/skills
+git clone https://github.com/iscvlab/mcp-bridges.git ~/.claude/skills
+git clone https://github.com/iscvlab/mcp-bridges.git ~/.grok/skills
+git clone https://github.com/iscvlab/mcp-bridges.git ~/.gemini/config/skills
+git clone https://github.com/iscvlab/mcp-bridges.git .agents/skills
 ```
 
 ---
@@ -86,7 +86,7 @@ mcp-bridges/
 ## 🔗 Related Toolkits
 
 Looking for high-discipline developer protocols and agent reasoning tools? Check out:
-* **[boostx v3.0.0](https://github.com/napattan/boostx/releases/tag/v3.0.0)**: Composable 12-skill AI agent ecosystem (`/boostx`, `/briefx`, `/contextx`, `/create-skillx`, `/deep-researchx`, `/kickoffx`, `/obsidianx`, `/planx`, `/publishx-audit`, `/publishx-qgis`, `/researchx`, `/syncx`).
+* **[boostx v3.0.0](https://github.com/iscvlab/boostx/releases/tag/v3.0.0)**: Composable 12-skill AI agent ecosystem (`/boostx`, `/briefx`, `/contextx`, `/create-skillx`, `/deep-researchx`, `/kickoffx`, `/obsidianx`, `/planx`, `/publishx-audit`, `/publishx-qgis`, `/researchx`, `/syncx`).
 
 ---
 
@@ -95,7 +95,7 @@ Looking for high-discipline developer protocols and agent reasoning tools? Check
 **Napat Phasundhiae**  
 *Computational Design Technologist | Spatial Analytics • Urban & Environmental Simulation • Workflow Automation*
 
-* **GitHub**: [@napattan](https://github.com/napattan)
+* **GitHub**: [@napattan](https://github.com/napattan) · [ISCV | Isocurve Research Lab (@iscvlab)](https://github.com/iscvlab)
 * **LinkedIn**: [Napat Phasundhiae](https://www.linkedin.com/in/napatphas/)
 
 ---
