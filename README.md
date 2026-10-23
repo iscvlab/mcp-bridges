@@ -12,7 +12,7 @@
 
 ## 🚀 Universal Installation
 
-Clone this repository, then run the universal installer or copy the `skills/*` folders into **your host's skill root** (same architecture as [boostx](https://github.com/iscvlab/boostx/releases/tag/v3.0.0)).
+Clone this repository, then run the universal installer or copy the `skills/*` folders into **your host's skill root** (same architecture as [boostx](https://github.com/iscvlab/boostx/releases/tag/v3.1.0)).
 
 | Host | Global Skill Root | Workspace Skill Root |
 |:---|:---|:---|
@@ -114,7 +114,7 @@ mcp-bridges/
 ## 🔗 Related Toolkits
 
 Looking for high-discipline developer protocols and agent reasoning tools? Check out:
-* **[boostx v3.0.0](https://github.com/iscvlab/boostx/releases/tag/v3.0.0)**: Composable 13-skill AI agent ecosystem (`/boostx`, `/briefx`, `/contextx`, `/create-skillx`, `/deep-researchx`, `/kickoffx`, `/layax`, `/obsidianx`, `/planx`, `/publishx-audit`, `/publishx-qgis`, `/researchx`, `/syncx`).
+* **[boostx v3.1.0](https://github.com/iscvlab/boostx/releases/tag/v3.1.0)**: Composable 14-skill AI agent ecosystem (`/boostx`, `/briefx`, `/contextx`, `/create-skillx`, `/deep-researchx`, `/kickoffx`, `/layax`, `/obsidianx`, `/planx`, `/publishx-audit`, `/publishx-qgis`, `/researchx`, `/syncx`, `/ultrax`).
 
 ---
 
