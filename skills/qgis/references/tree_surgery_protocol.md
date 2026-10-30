@@ -4,7 +4,7 @@ Detailed reference documentation for [`../SKILL.md`](../SKILL.md) regarding low-
 
 ---
 
-## 1. SIP Symbol Clone Crash Mechanics (QGIS 3.40, SIP/C++ Renderers)
+## 1. SIP Symbol Clone Crash Mechanics (QGIS 3.28–3.40, SIP/C++ Renderers)
 
 Python-constructed `QgsSymbol` / `QgsSymbolLayer` / `Qgs*Renderer` objects hold transient pointers that SIP can prematurely garbage collect or corrupt. Any subsequent C++ `clone()` or serialization causes an instant segmentation fault (`SIGSEGV` at `sipQgsFillSymbol::clone`).
 
@@ -57,16 +57,15 @@ bridge.setEnabled(True)
 
 ## 3. Broken Datasource & Staging Directory Recovery Protocol
 
-If layers under `Planning · Statutory Zoning & Land Use` report `isValid() == False` (`[!]` warning icon):
+If layers in a `.qgz` project report `isValid() == False` (`[!]` warning icon):
 
 1. **Verify Physical File Existence**:
-   * `01_site_analysis/01_macro_scale/05_db_e_buildings/04_osm_context/data/raw/bma_dpt/lup_polygon/lup_polygon_2013_zoning.geojson` (607 features)
-   * `01_site_analysis/01_macro_scale/05_db_e_buildings/04_osm_context/data/raw/ldd_observed_landuse_2023/การใช้ที่ดิน/LU_BKK_2566.shp` (11,179 features)
-   * `01_site_analysis/01_macro_scale/05_db_e_buildings/04_osm_context/qgis_bma_landuse/สมุทรปราการ2567/การใช้ที่ดิน/LU_SPK_2567.shp` (8,819 features)
+   * Inspect `lyr.source()` on each invalid layer to identify the expected relative path (e.g., `./layers/<dataset>.gpkg`, `../data/raw/<zoning>.geojson`, or `../data/<landuse>.shp`).
+   * Confirm the backing `.gpkg`, `.geojson`, or `.shp` (plus `.shx`, `.dbf`, `.prj` sidecars) exists on disk and has non-zero feature count.
 2. **Re-stage and Reload**:
-   * If paths were broken due to file movement, restore files to relative paths rather than changing layer IDs.
-   * Call `lyr.dataProvider().reloadData()` or `lyr.setDataSource(...)`.
+   * If paths were broken due to directory restructuring, restore the dataset to its expected relative path or update the datasource via `lyr.setDataSource(new_source, lyr.name(), lyr.providerType())` while preserving `lyr.id()`.
+   * Call `lyr.dataProvider().reloadData()`.
    * Verify with the Zero-Invalid Invariant:
      ```python
-     assert len([l for l in QgsProject.instance().mapLayers().values() if not l.isValid()]) == 0
+     assert len([lyr for lyr in QgsProject.instance().mapLayers().values() if not lyr.isValid()]) == 0
      ```
