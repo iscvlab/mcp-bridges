@@ -139,7 +139,8 @@ mcp-bridges/
 ## 🔗 Related Toolkits
 
 Looking for high-discipline developer protocols and Elastic Cognitive Swarm orchestration? Check out:
-* **[boostx v3.2.0](https://github.com/iscvlab/boostx/releases/tag/v3.2.0)**: Composable 13-skill `/x*` AI agent ecosystem (`/xboost`, `/xbrief`, `/xcontext`, `/xcreate-skill`, `/xdeep-research`, `/xkickoff`, `/xlaya`, `/xobsidian`, `/xplan`, `/xpublish-audit`, `/xpublish-qgis`, `/xsync`, `/xultra`).
+* **[boostx v3.2.0](https://github.com/iscvlab/boostx/releases/tag/v3.2.0)**: Composable 14-skill `/x*` AI agent ecosystem (`/xboost`, `/xbrief`, `/xcontext`, `/xcreate-skill`, `/xdeep-research`, `/xkickoff`, `/xlaya`, `/xobsidian`, `/xocr`, `/xplan`, `/xpublish-audit`, `/xpublish-qgis`, `/xsync`, `/xultra`).
+* **[xocr v2.1.0](https://github.com/iscvlab/xocr)**: High-speed C++ PyMuPDF vector/table extractor, Two-Stage LaTeX `booktabs` & scanned HTML `<table>` → RFC-4180 CSV surgery, Thai PUA/Sara-Am normalizer, and 4-Tier local `SCB 10X Typhoon-OCR v1.5` (`Qwen3-VL`) & `baidu/Unlimited-OCR-2` hybrid engine.
 
 ---
 
