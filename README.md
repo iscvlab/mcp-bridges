@@ -8,6 +8,8 @@
 > **Production-grade Model Context Protocol (MCP) & CAD automation bridges for Rhino 3D, Grasshopper, QGIS, Adobe Illustrator, and Figma.**  
 > Built for AI coding assistants to operate deterministically across 3D CAD, parametric algorithms, GIS data, and presentation vector plates—with built-in **Elastic Cognitive Swarm (`/xultra`) Anti-"Multiple-Mouses" Live MCP Serialization**.
 
+Sister toolkits: **[boostx](https://github.com/iscvlab/boostx)** (14-Skill `/x*` Agent Ecosystem & 8 Python CLI Engines) · **[xocr](https://github.com/iscvlab/xocr)** (Hybrid Document AI, Two-Stage LaTeX `booktabs` Table Surgery & 4-Tier `baidu/Unlimited-OCR-2` Engine).
+
 ---
 
 ## 🚀 Universal Installation
