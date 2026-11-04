@@ -1,6 +1,6 @@
 # QGIS Advanced PyQGIS, Layer Tree Surgery & Crash Prevention Protocol
 
-Detailed reference documentation for [`../SKILL.md`](../SKILL.md) regarding low-level PyQGIS quirks, C++ pointer safety, and layer tree manipulation in QGIS 3.28–3.40.
+Detailed reference documentation for [`qgis/SKILL.md`](../SKILL.md) regarding low-level PyQGIS quirks, C++ pointer safety, and layer tree manipulation in QGIS 3.28–3.40.
 
 ---
 

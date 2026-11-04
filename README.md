@@ -23,12 +23,18 @@ Sister toolkits & upstream contributions: **[boostx](https://github.com/iscvlab/
   * **Geospatial & Cartography**: `/qgis` (live PyQGIS, metric UTM `EPSG:32647` geoprocessing, `.qml` styling & SIP-safe layer tree surgery).
   * **Vector Plates & UI Systems**: `/illustrator` (artboard layout, typography & Z-order-safe grouping), `/figma` (port `8765` HTML-to-Design push & token extraction).
 
+Try it now with a **one-prompt agent install** (copy and paste into your AI coding chat):
+
+```text
+Install iscvlab/mcp-bridges (https://github.com/iscvlab/mcp-bridges): detect my OS and active AI host skill root, clone the repository, install the 7 CAD/GIS/Vector MCP skills into my skill directory (Windows: ./scripts/install.ps1; macOS/Linux: ./scripts/install.sh), check which desktop MCP servers (Rhino, Grasshopper, QGIS, Illustrator, Figma) are configured in my MCP settings, and report what was verified vs. what still needs a live desktop session.
+```
+
 ### Horizontal Bar Comparison (Live Desktop MCP Automation vs. Unguarded / Manual Baseline)
 
 | Evaluation Dimension | Workflow / Configuration | Visual Comparison Bar | Measured Result & Delta vs. Baseline |
 | :--- | :--- | :--- | :--- |
 | **1. Parametric Graph Wiring Speed ↑**<br>*(20-Component Grasshopper Graph)* | **`/grasshopper` Batch Defer (`solve=false`)**<br>Naive Per-Wire MCP Loop (`20×` Re-Solves) | `████████████████████` **`18.5× Faster`**<br>`█░░░░░░░░░░░░░░░░░░░` `1.0× Baseline` | **`1.4 s` (`1` Final `g1_solve_graph` Pass)** ✨<br>`25.9 s` (`20` Redundant Canvas Freezes) |
-| **2. C# Component Registry Sync ↑**<br>*(61 Grasshopper `.cs` Script Files)* | **`/components-log` (`batch_update.py` CLI)**<br>Manual Signature & Comment Audit | `████████████████████` **`100.0% Automated`**<br>`░░░░░░░░░░░░░░░░░░░░` `0.0% Automated` | **`0.18 s` (`61 / 61` `.cs` Signatures Parsed)** ✨<br>`~45 min` Manual Inspection & Markdown Edits |
+| **2. C# Component Registry Sync ↑**<br>*(61 Grasshopper `.cs` Script Files)* | **`/components-log` (`scripts/batch_update.py` CLI)**<br>Manual Signature & Comment Audit | `████████████████████` **`100.0% Automated`**<br>`░░░░░░░░░░░░░░░░░░░░` `0.0% Automated` | **`0.18 s` (`61 / 61` `.cs` Signatures Parsed)** ✨<br>`~45 min` Manual Inspection & Markdown Edits |
 | **3. Live GUI Crash & Race Immunity ↑**<br>*(Multi-Agent `/xultra` Swarm Execution)* | **Single-Mouse + SIP / Z-Order Guards**<br>Unserialized Concurrent GUI Mutation | `████████████████████` **`100.0% Safe`**<br>`████░░░░░░░░░░░░░░░░` `20.0% Safe` | **`0` C++ `SIGSEGV` / `0` Z-Order Flips** ✨<br>Frequent QGIS SIP Crash & Selection Race |
 | **4. System-Prompt Budget Guard ↑**<br>*(`≤ 400`-Char Target & Dual Triggers)* | **`mcp-bridges` Suite (`N = 7` Skills)**<br>All Installed Host Skills (`N = 109`)<br>Official Cloud/Vendor Skills (`N = 31`) | `████████████████████` **`100.0% (7/7 Pass)`**<br>`██████░░░░░░░░░░░░░░` `29.4% (32/109)`<br>`█████░░░░░░░░░░░░░░░` `25.8% (8/31)` | **`330.86` chars Mean (`305-373` range)** ✨<br>`323.61` chars Mean (`29.4%` Dual Guards)<br>`428.61` chars Mean (`25.8%` Dual Guards) |
 
@@ -130,7 +136,7 @@ mcp-bridges/
 | **2. Rhino Bridge**<br>`/rhino` | **Rhinoceros 3D**<br>`Rhino-MCP-Platform` `v0.3.0` | Multi-slot session management (`list_slots`/`spawn_slot`), NURBS/SubD/Mesh modeling, layer hierarchies, RhinoCommon C#/Python, and viewport capture. | Enforces explicit `ModelUnitSystem` conversion and isolated `<Parent>::<Shard>` sub-layers. |
 | **3. Grasshopper Bridge**<br>`/grasshopper`, `/gh` | **Grasshopper (GH1)**<br>`g1_*` tools • `GH_Structure` | Declarative canvas automation (`g1_apply_graph`, `g1_connect_many`), data tree surgery (*Simplify*, *Graft*, *Flatten*), and runtime diagnostics. | Batches all wiring with `solve=false` and `replace=false` before a single final `g1_solve_graph`. |
 | **4. Rhino Alias Utility**<br>`/rhino-alias`, `/alias` | **RhinoPython**<br>`rhinoscriptsyntax` • `scriptcontext` | Authors self-contained Rhino Python command scripts (`alias/<name>.py`) and generates `! _-RunPythonScript` macros for `Rhino Options → Aliases`. | Enforces `sc.doc.Views.Redraw()` and undo-record wrapping (`BeginUndoRecord` / `EndUndoRecord`). |
-| **5. Components Log**<br>`/components-log`, `/looklog`, `/updatelog` | **Grasshopper C#**<br>`update_log.py` • `batch_update.py` | Parses Grasshopper C# (`Script_Instance`) `.cs` files (`void RunScript(...)` + `INPUTS/OUTPUTS` headers) into `components_log.json` and `components_log.md`. | Deterministic regex/signature parser (`0.18 s` across `61` C# components) with zero manual drift. |
+| **5. Components Log**<br>`/components-log`, `/looklog`, `/updatelog` | **Grasshopper C#**<br>`scripts/update_log.py` • `scripts/batch_update.py` | Parses Grasshopper C# (`Script_Instance`) `.cs` files (`void RunScript(...)` + `INPUTS/OUTPUTS` headers) into `components_log.json` and `components_log.md`. | Deterministic regex/signature parser (`0.18 s` across `61` C# components) with zero manual drift. |
 | **6. Illustrator Bridge**<br>`/illustrator` | **Adobe Illustrator**<br>`illustrator-mcp-server` • ExtendScript | Automates Swiss architectural plate layouts, typographic hierarchy (`Space Grotesk` / `Plus Jakarta Sans`), and vector `.ai`/`.pdf`/`.svg` export. | Enforces ascending Z-order grouping and pre/post `pageItems.length` item-count checks. |
 | **7. Figma Bridge**<br>`/figma` | **Figma Desktop / Web**<br>`figma_desktop` • `html.to.design` | Bidirectional design-to-code sync: pushes live HTML/CSS variants on port `8765` into Figma and extracts Auto-Layout & typography tokens back to code. | Shares a single HTTP server daemon (`port 8765`) serving disjoint `<stem>_vA.._vK.html` variants. |
 
@@ -140,12 +146,12 @@ mcp-bridges/
 | Skill Directory | YAML Budget (`≤ 400`) & Dual Guards | Bundled Scripts / Reference Specs | Primary Crash / Race Condition Prevented |
 | :--- | :---: | :--- | :--- |
 | `skills/qgis` | `312 chars` • `100%` ✓ | `references/tree_surgery_protocol.md` | Prevents Qt5/Qt6 SIP wrapper deletion (`RuntimeError: wrapped C/C++ object has been deleted`) during layer tree reordering. |
-| `skills/rhino` | `351 chars` • `100%` ✓ | `SKILL.md` (`spawn_slot` protocol) | Prevents active-selection collisions (`rs.SelectedObjects()`) by binding headless `RhinoCommon` geometry directly by `Guid`. |
-| `skills/grasshopper` | `373 chars` • `100%` ✓ | `SKILL.md` (`g1_*` `v0.3.0` schema) | Prevents `O(N²)` solver hangs by enforcing `solve=false` during multi-wire graph assembly and `replace=false` on multi-input pins. |
-| `skills/rhino-alias` | `305 chars` • `100%` ✓ | `SKILL.md` (Dual-OS macro generator) | Prevents broken Windows/macOS path quoting inside Rhino's `! _-RunPythonScript "..."` command macro parser. |
+| `skills/rhino` | `351 chars` • `100%` ✓ | `rhino/SKILL.md` (`spawn_slot` protocol) | Prevents active-selection collisions (`rs.SelectedObjects()`) by binding headless `RhinoCommon` geometry directly by `Guid`. |
+| `skills/grasshopper` | `373 chars` • `100%` ✓ | `grasshopper/SKILL.md` (`g1_*` `v0.3.0` schema) | Prevents `O(N²)` solver hangs by enforcing `solve=false` during multi-wire graph assembly and `replace=false` on multi-input pins. |
+| `skills/rhino-alias` | `305 chars` • `100%` ✓ | `rhino-alias/SKILL.md` (Dual-OS macro generator) | Prevents broken Windows/macOS path quoting inside Rhino's `! _-RunPythonScript "..."` command macro parser. |
 | `skills/components-log` | `332 chars` • `100%` ✓ | `scripts/update_log.py`, `scripts/batch_update.py` | Prevents stale input/output parameter documentation across multi-layer C# Grasshopper simulation assemblies. |
-| `skills/illustrator` | `335 chars` • `100%` ✓ | `SKILL.md` (Z-order & artboard ledger) | Prevents ExtendScript `groupItems.add()` from inverting visual stacking order when moving items into new parent groups. |
-| `skills/figma` | `308 chars` • `100%` ✓ | `SKILL.md` (Option B port `8765` bridge) | Prevents port-binding conflicts (`EADDRINUSE` on `8765`) when comparing multiple UI prototypes in parallel. |
+| `skills/illustrator` | `335 chars` • `100%` ✓ | `illustrator/SKILL.md` (Z-order & artboard ledger) | Prevents ExtendScript `groupItems.add()` from inverting visual stacking order when moving items into new parent groups. |
+| `skills/figma` | `308 chars` • `100%` ✓ | `figma/SKILL.md` (Option B port `8765` bridge) | Prevents port-binding conflicts (`EADDRINUSE` on `8765`) when comparing multiple UI prototypes in parallel. |
 
 </details>
 
@@ -169,27 +175,27 @@ Desktop CAD, GIS, and vector design applications (**Rhino**, **Grasshopper**, **
 
 ## 4. Universal Installation & Repository Layout
 
-Clone this repository, then run the universal installer or copy the `skills/*` folders into **your host's skill root** (same architecture as [`iscvlab/boostx`](https://github.com/iscvlab/boostx/releases/tag/v3.3.0)):
+Clone this repository, then run the universal installer or copy the `skills/*` folders into **your host's skill root** (same architecture as [`iscvlab/boostx`](https://github.com/iscvlab/boostx)). Following zero-cheat verification standards (`tested` = live E2E runtime verified; `spec-compatible` = standard skill frontmatter structure transcribed to the client's documented skill path):
 
-| Host / Agent Platform | Global Skill Root | Workspace Skill Root |
-|:---|:---|:---|
-| **Claude Code** | `~/.claude/skills` | `<repo>/.claude/skills` |
-| **Grok** | `$GROK_HOME/skills` or `~/.grok/skills` | `<repo>/.grok/skills` |
-| **Gemini / Antigravity** | `~/.gemini/config/skills` | `<repo>/.agents/skills` |
-| **Cursor / Codex / Windsurf** | `~/.agents/skills` | `<repo>/.agents/skills` |
+| Host / Agent Platform | Global Skill Root | Workspace Skill Root | Verification Status |
+|:---|:---|:---|:---|
+| **Gemini / Antigravity** | `~/.gemini/config/skills` | `<repo>/.agents/skills` | **`tested`** (Live E2E verified on Windows 11 across Rhino `v0.3.0`, GH1, PyQGIS, Illustrator & Figma) |
+| **Claude Code** | `~/.claude/skills` | `<repo>/.claude/skills` | **`spec-compatible`** (Path & skill schema verified via `scripts/install.ps1` & `scripts/install.sh`; live host PRs welcome) |
+| **Cursor / Codex / Windsurf** | `~/.agents/skills` | `<repo>/.agents/skills` | **`spec-compatible`** (Path & skill schema verified via `scripts/install.ps1` & `scripts/install.sh`; live host PRs welcome) |
+| **Grok** | `$GROK_HOME/skills` or `~/.grok/skills` | `<repo>/.grok/skills` | **`spec-compatible`** (Path & skill schema verified via `scripts/install.ps1` & `scripts/install.sh`; live host PRs welcome) |
 
 ### Option A: Automated Multi-Host Installer (Recommended)
 
 **Windows (PowerShell):**
 ```powershell
-git clone https://github.com/iscvlab/mcp-bridges.git
+git clone https://github.com/iscvlab/mcp-bridges
 cd mcp-bridges
-.\scripts\install.ps1 -All
+./scripts/install.ps1 -All
 ```
 
 **macOS / Linux (Bash / Zsh):**
 ```bash
-git clone https://github.com/iscvlab/mcp-bridges.git
+git clone https://github.com/iscvlab/mcp-bridges
 cd mcp-bridges
 chmod +x scripts/install.sh
 ./scripts/install.sh --all
@@ -198,7 +204,7 @@ chmod +x scripts/install.sh
 ### Option B: Direct Copy into a Specific Host Root
 
 ```bash
-git clone https://github.com/iscvlab/mcp-bridges.git
+git clone https://github.com/iscvlab/mcp-bridges
 
 # Claude Code
 mkdir -p ~/.claude/skills && cp -r mcp-bridges/skills/* ~/.claude/skills/
@@ -220,30 +226,28 @@ mcp-bridges/
 ├── README.md
 ├── LICENSE                               ← MIT License
 ├── .gitignore
+├── llms.txt                              ← Machine-readable LLM & XERJ corpus index
 ├── skills/
-│   ├── qgis/
-│   │   ├── SKILL.md
-│   │   └── references/tree_surgery_protocol.md
+│   ├── qgis/SKILL.md
+│   ├── qgis/references/tree_surgery_protocol.md
 │   ├── rhino/SKILL.md
 │   ├── grasshopper/SKILL.md
 │   ├── rhino-alias/SKILL.md
-│   ├── components-log/
-│   │   ├── SKILL.md
-│   │   └── scripts/
-│   │       ├── update_log.py
-│   │       └── batch_update.py
+│   ├── components-log/SKILL.md
+│   ├── components-log/scripts/update_log.py
+│   ├── components-log/scripts/batch_update.py
 │   ├── illustrator/SKILL.md
 │   └── figma/SKILL.md
 └── scripts/
-    ├── install.sh                        ← Universal installer for macOS / Linux
-    └── install.ps1                       ← Universal installer for Windows PowerShell
+    ├── scripts/install.sh                ← Universal installer for macOS / Linux
+    └── scripts/install.ps1               ← Universal installer for Windows PowerShell
 ```
 
 ---
 
 ## 5. Related Toolkits, Author & License
 
-* **[boostx v3.3.0](https://github.com/iscvlab/boostx/releases/tag/v3.3.0)**: Composable 14-skill `/x*` AI agent ecosystem (`/xboost`, `/xbrief`, `/xcontext`, `/xcreate-skill`, `/xdeep-research`, `/xkickoff`, `/xlaya`, `/xobsidian`, `/xocr`, `/xplan`, `/xpublish-audit`, `/xpublish-qgis`, `/xsync`, `/xultra`).
+* **[boostx v3.3.0](https://github.com/iscvlab/boostx)**: Composable 14-skill `/x*` AI agent ecosystem (`/xboost`, `/xbrief`, `/xcontext`, `/xcreate-skill`, `/xdeep-research`, `/xkickoff`, `/xlaya`, `/xobsidian`, `/xocr`, `/xplan`, `/xpublish-audit`, `/xpublish-qgis`, `/xsync`, `/xultra`).
 * **[xocr v2.1.0](https://github.com/iscvlab/xocr)**: High-speed C++ PyMuPDF vector/table extractor, Two-Stage LaTeX `booktabs` & scanned HTML `<table>` → RFC-4180 CSV surgery (`19-97 ms/page`, `15.0×-3,326×` faster hybrid routing), Thai PUA/Sara-Am normalizer, and 4-Tier local `SCB 10X Typhoon-OCR v1.5` (`Qwen3-VL`) & `baidu/Unlimited-OCR-2` engine (**[Upstream PR #15 to `scb-10x/typhoon-ocr`](https://github.com/scb-10x/typhoon-ocr/pull/15)**).
 * **[qgis-axonometric-transformer v1.2.2](https://plugins.qgis.org/plugins/axonometric_transformer/)**: Official QGIS plugin (Plugin ID: `6219`) for 1-click isometric, dimetric, and oblique axonometric map diagrams.
 

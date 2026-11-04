@@ -19,7 +19,7 @@ Parse the specified C# component file and update `components_log.json` and `comp
 
 * **Windows (PowerShell)**:
   ```powershell
-  python "$env:USERPROFILE\.gemini\config\skills\components-log\scripts\update_log.py" "<workspace_root>" "<filepath>"
+  python "$env:USERPROFILE/.gemini/config/skills/components-log/scripts/update_log.py" "<workspace_root>" "<filepath>"
   ```
 * **macOS / Linux**:
   ```bash
@@ -31,7 +31,7 @@ Scan the workspace for the highest-versioned C# script components (`<Prefix>_<Na
 
 * **Windows (PowerShell)**:
   ```powershell
-  python "$env:USERPROFILE\.gemini\config\skills\components-log\scripts\batch_update.py" "<workspace_root>"
+  python "$env:USERPROFILE/.gemini/config/skills/components-log/scripts/batch_update.py" "<workspace_root>"
   ```
 * **macOS / Linux**:
   ```bash

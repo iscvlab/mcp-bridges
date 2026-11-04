@@ -1,6 +1,6 @@
 ---
 name: qgis
-description: Geospatial analysis, layer inspection, geoprocessing, cartographic styling, print layouts, and CAD/Grasshopper export via QGIS MCP (/qgis). Use when inspecting, styling, analyzing, or exporting QGIS layers, maps, or projects. Do NOT use for standalone Leaflet/Turf.js web maps or pure Rhino 3D modeling (/rhino).
+description: Geospatial analysis, layer inspection, geoprocessing, cartographic styling, print layouts, and CAD/Grasshopper export via QGIS MCP (/qgis). Use when inspecting, styling, analyzing, or exporting QGIS layers, maps, or projects. Do NOT use for standalone Leaflet or Turf.js web maps or pure Rhino 3D modeling (/rhino).
 ---
 
 # QGIS Geospatial Intelligence & Automation Workflow (`/qgis`)

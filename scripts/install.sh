@@ -13,6 +13,11 @@ echo "  ⚡ MCP Bridges (7 Skills) — Universal Installer"
 echo "============================================================"
 echo "Source: $SKILLS_SRC"
 
+MODE="copy"
+if [ "$1" == "--symlink" ] || [ "$2" == "--symlink" ]; then
+    MODE="symlink"
+fi
+
 install_to() {
     local target_dir="$1"
     local name="$2"
@@ -30,14 +35,19 @@ install_to() {
             if [ -L "$dest" ] || [ -d "$dest" ]; then
                 rm -rf "$dest"
             fi
-            ln -s "$skill" "$dest"
-            echo "  ✓ Linked /$skill_name"
+            if [ "$MODE" == "symlink" ]; then
+                ln -s "$skill" "$dest"
+                echo "  ✓ Linked /$skill_name"
+            else
+                cp -R "$skill" "$dest"
+                echo "  ✓ Installed /$skill_name"
+            fi
         fi
     done
 }
 
 NO_FLAG=false
-if [ -z "$1" ]; then
+if [ -z "$1" ] || [ "$1" == "--symlink" ]; then
     NO_FLAG=true
 fi
 
@@ -57,14 +67,20 @@ if [ "$1" == "--grok" ] || [ "$1" == "--all" ] || { [ "$NO_FLAG" == true ] && [ 
     install_to "$GROK_ROOT/skills" "Grok"
 fi
 
-# 4. Cursor / Codex / Windsurf (~/.agents/skills)
+# 4. Cursor / Codex / Windsurf (~/.agents/skills & ~/.codex/skills)
 if [ "$1" == "--agents" ] || [ "$1" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.agents" ]; }; then
     install_to "$HOME/.agents/skills" "Cursor / Codex / Windsurf (.agents)"
 fi
+if [ "$1" == "--codex" ] || [ "$1" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.codex" ]; }; then
+    install_to "$HOME/.codex/skills" "Codex (.codex)"
+fi
 
 # 5. Target workspace if provided
-if [ -n "$2" ] && [ -d "$2" ]; then
+if [ -n "$2" ] && [ "$2" != "--symlink" ] && [ -d "$2" ]; then
     install_to "$2/.agents/skills" "Workspace .agents ($2)"
+    if [ -d "$2/.claude" ] || [ "$1" == "--claude" ] || [ "$1" == "--all" ]; then
+        install_to "$2/.claude/skills" "Workspace .claude ($2)"
+    fi
     if [ -d "$2/.grok" ] || [ "$1" == "--grok" ]; then
         install_to "$2/.grok/skills" "Workspace .grok ($2)"
     fi

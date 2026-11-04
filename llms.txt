@@ -1,0 +1,22 @@
+# MCP Bridges (iscvlab/mcp-bridges)
+
+> Production CAD, GIS, and vector design Model Context Protocol (MCP) skill suite for AI coding agents across Rhinoceros 3D, Grasshopper (GH1), QGIS Desktop (PyQGIS), Adobe Illustrator, and Figma, hardened with `/xultra` Single-Mouse GUI serialization.
+
+## Quickstart & Universal Install
+
+- [README.md](README.md): Architecture, measured benchmarks, one-prompt agent installer, and host verification table (`tested` on Antigravity Windows 11; `spec-compatible` across Claude Code, Codex, Cursor, and Grok).
+- [scripts/install.ps1](scripts/install.ps1): Windows PowerShell installer (`./scripts/install.ps1 -All`).
+- [scripts/install.sh](scripts/install.sh): macOS and Linux installer (`./scripts/install.sh --all`, copies directories by default for `xerj autoindex --skills` compatibility).
+
+## Skills & Reference Documentation
+
+- [skills/qgis/SKILL.md](skills/qgis/SKILL.md): Geospatial PyQGIS automation, metric UTM `EPSG:32647` geoprocessing, `.qml` cartography, and print layout export.
+- [skills/qgis/references/tree_surgery_protocol.md](skills/qgis/references/tree_surgery_protocol.md): SIP C++ pointer crash prevention (`QgsLayerTreeRegistryBridge.setEnabled(False)`) during layer tree reordering.
+- [skills/rhino/SKILL.md](skills/rhino/SKILL.md): 3D NURBS/SubD/Mesh modeling, `spawn_slot` multi-instance isolation, and RhinoCommon C#/Python execution (`Rhino-MCP-Platform` `v0.3.0`).
+- [skills/grasshopper/SKILL.md](skills/grasshopper/SKILL.md): Parametric `g1_*` canvas wiring, deferred batch solving (`solve=false` -> `g1_solve_graph`, `18.5x` faster), and data tree surgery.
+- [skills/rhino-alias/SKILL.md](skills/rhino-alias/SKILL.md): Persistent RhinoPython command alias authoring and Dual-OS `! _-RunPythonScript` macro generation.
+- [skills/components-log/SKILL.md](skills/components-log/SKILL.md): Grasshopper C# (`Script_Instance`) registry parser and Markdown/JSON synchronizer.
+- [skills/components-log/scripts/update_log.py](skills/components-log/scripts/update_log.py): Single-component C# `RunScript` signature and parameter header parser.
+- [skills/components-log/scripts/batch_update.py](skills/components-log/scripts/batch_update.py): Multi-layer batch scanner for Grasshopper C# component directories.
+- [skills/illustrator/SKILL.md](skills/illustrator/SKILL.md): Swiss vector plate layout, typographic hierarchy, and ascending Z-order-safe grouping via ExtendScript MCP.
+- [skills/figma/SKILL.md](skills/figma/SKILL.md): Bidirectional HTML-to-Design (`port 8765`) and Figma Auto-Layout synchronization.
