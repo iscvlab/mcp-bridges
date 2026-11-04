@@ -23,7 +23,7 @@ Parse the specified C# component file and update `components_log.json` and `comp
   ```
 * **macOS / Linux**:
   ```bash
-  python ~/.gemini/config/skills/components-log/scripts/update_log.py "<workspace_root>" "<filepath>"
+  python3 ~/.gemini/config/skills/components-log/scripts/update_log.py "<workspace_root>" "<filepath>"
   ```
 
 ### 3. Batch Update All Latest Components
@@ -35,7 +35,7 @@ Scan the workspace for the highest-versioned C# script components (`<Prefix>_<Na
   ```
 * **macOS / Linux**:
   ```bash
-  python ~/.gemini/config/skills/components-log/scripts/batch_update.py "<workspace_root>"
+  python3 ~/.gemini/config/skills/components-log/scripts/batch_update.py "<workspace_root>"
   ```
 
 If a command fails, report the stderr diagnostic and ask the user for guidance.

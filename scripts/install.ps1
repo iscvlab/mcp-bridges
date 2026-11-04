@@ -19,15 +19,66 @@ Write-Host "  ⚡ MCP Bridges (7 Skills) — Windows Installer" -ForegroundColor
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host "Source: $SkillsSrc"
 
+$installedPhysicalDirs = @{}
+
+function Resolve-PhysicalPath([string]$PathToResolve) {
+    $full = [System.IO.Path]::GetFullPath($PathToResolve)
+    $parts = @()
+    $curr = $full
+    while (-not [string]::IsNullOrEmpty($curr)) {
+        if (Test-Path -LiteralPath $curr) {
+            $item = Get-Item -LiteralPath $curr -Force
+            if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -and $item.Target) {
+                $targetVal = if ($item.Target -is [array]) { $item.Target[0] } else { $item.Target }
+                if (-not [System.IO.Path]::IsPathRooted($targetVal)) {
+                    $targetVal = Join-Path (Split-Path -Parent $curr) $targetVal
+                }
+                $curr = [System.IO.Path]::GetFullPath($targetVal)
+                continue
+            }
+        }
+        $parent = Split-Path -Parent $curr
+        if ([string]::IsNullOrEmpty($parent) -or $parent -eq $curr) {
+            $parts = ,$curr + $parts
+            break
+        }
+        $leaf = Split-Path -Leaf $curr
+        $parts = ,$leaf + $parts
+        $curr = $parent
+    }
+    $resolved = $parts[0]
+    for ($i = 1; $i -lt $parts.Count; $i++) {
+        $resolved = Join-Path $resolved $parts[$i]
+    }
+    return [System.IO.Path]::GetFullPath($resolved).TrimEnd('\', '/').ToLowerInvariant()
+}
+
 function Install-Skills([string]$TargetDir, [string]$PlatformName) {
     if (-not (Test-Path $TargetDir)) {
         New-Item -ItemType Directory -Path $TargetDir -Force | Out-Null
     }
+    $physTarget = Resolve-PhysicalPath $TargetDir
+    $physSrc = Resolve-PhysicalPath $SkillsSrc
+    if ($physTarget -eq $physSrc) {
+        Write-Host "`nSkipping $PlatformName ($TargetDir) — source and destination resolve to the same physical directory." -ForegroundColor DarkGray
+        return
+    }
+    if ($installedPhysicalDirs.ContainsKey($physTarget)) {
+        Write-Host "`nSkipping $PlatformName ($TargetDir) — physical directory already updated via $($installedPhysicalDirs[$physTarget])." -ForegroundColor DarkGray
+        return
+    }
+    $installedPhysicalDirs[$physTarget] = $PlatformName
+
     Write-Host "`nInstalling into $PlatformName ($TargetDir)..." -ForegroundColor Yellow
 
     Get-ChildItem -Directory $SkillsSrc | ForEach-Object {
         $skillName = $_.Name
         $dest = Join-Path $TargetDir $skillName
+
+        if ((Test-Path $dest) -and ((Resolve-PhysicalPath $_.FullName) -eq (Resolve-PhysicalPath $dest))) {
+            Write-Host "  ✓ Skipped /$skillName (source == destination)" -ForegroundColor DarkGray
+            return
+        }
 
         if (Test-Path $dest) {
             Remove-Item $dest -Recurse -Force

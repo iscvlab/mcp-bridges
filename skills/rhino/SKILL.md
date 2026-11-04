@@ -17,23 +17,19 @@ This skill enables direct AI agent interaction with active **Rhinoceros 3D** ses
 Before executing any Rhino operation, verify the live connection and target slot:
 
 1. **Verify MCP Server Configuration** (Dual-OS Support: macOS & Windows):
-   - **macOS**: Router executable is installed via Rhino 8 `_PackageManager` (`Rhino-MCP-Platform`):
-     - Path (Apple Silicon): `~/Library/Application Support/McNeel/Rhinoceros/packages/8.0/Rhino-MCP-Platform/<version>/router/osx-arm64/rhino-mcp-router`
-     - Path (Intel): `~/Library/Application Support/McNeel/Rhinoceros/packages/8.0/Rhino-MCP-Platform/<version>/router/osx-x64/rhino-mcp-router`
-     - In `~/.gemini/config/mcp_config.json`:
-       ```json
-       "rhino": {
-         "command": "/Users/<user>/Library/Application Support/McNeel/Rhinoceros/packages/8.0/Rhino-MCP-Platform/<version>/router/osx-arm64/rhino-mcp-router",
-         "args": []
-       }
-       ```
-   - **Windows**: In `%USERPROFILE%/.gemini/config/mcp_config.json`:
+   - **Unified Cross-OS Launcher (`mcp_config.json`)**: Uses a dynamic `node -e` resolver across Windows (`win-x64` / `win-arm64`) and macOS (`osx-arm64` / `osx-x64`) that automatically selects the highest installed `Rhino-MCP-Platform` version:
      ```json
      "rhino": {
-       "command": "%APPDATA%/McNeel/Rhinoceros/packages/8.0/Rhino-MCP-Platform/<version>/router/win-x64/rhino-mcp-router.exe",
-       "args": []
+       "command": "node",
+       "args": [
+         "-e",
+         "const os=require('os'),fs=require('fs'),p=require('path'),cp=require('child_process'),h=os.homedir(),w=process.platform==='win32',a=process.arch==='arm64'?'arm64':'x64',roots=[p.join(process.env.APPDATA||p.join(h,'AppData','Roaming'),'McNeel','Rhinoceros','packages','8.0','Rhino-MCP-Platform'),p.join(h,'.mcneel','rhinoceros','8.0','packages','Rhino-MCP-Platform'),p.join(h,'Library','Application Support','McNeel','Rhinoceros','packages','8.0','Rhino-MCP-Platform')],r=roots.find(x=>fs.existsSync(x)),b=w?'rhino-mcp-router.exe':'rhino-mcp-router',pf=w?['win-'+a,'win-x64','win-arm64']:['osx-'+a,'osx-arm64','osx-x64'],bin=r&&fs.readdirSync(r).sort((x,y)=>y.localeCompare(x,undefined,{numeric:true})).flatMap(v=>pf.map(d=>p.join(r,v,'router',d,b))).find(x=>fs.existsSync(x));if(!bin){console.error('Rhino-MCP-Platform router not found');process.exit(1);}cp.spawn(bin,process.argv.slice(1),{stdio:'inherit'}).on('exit',k=>process.exit(k??0));"
+       ]
      }
      ```
+   - **Underlying Binary Paths** (installed via Rhino 8 `_PackageManager` → `Rhino-MCP-Platform`):
+     - **macOS (Apple Silicon / Intel)**: `~/Library/Application Support/McNeel/Rhinoceros/packages/8.0/Rhino-MCP-Platform/<version>/router/<osx-arm64|osx-x64>/rhino-mcp-router`
+     - **Windows (x64 / ARM64)**: `%APPDATA%/McNeel/Rhinoceros/packages/8.0/Rhino-MCP-Platform/<version>/router/<win-x64|win-arm64>/rhino-mcp-router.exe`
 2. **Slot Discovery & Multi-Instance Lifecycle (`list_slots`, `spawn_slot`, `close_slot`, `get_context`)**:
    - **Query Active Slots**: Call `list_slots` (takes `{}`). Running user-opened Rhinos automatically advertise themselves and are adopted under animal-name slot IDs; router-launched Rhinos return spawned slot IDs.
    - **1-Call Context Snapshot**: Call `get_context(slot=...)` for an instant read-only snapshot of active selection, active viewport/camera, document object/layer counts, and open Grasshopper (GH1/GH2) canvas summaries.

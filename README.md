@@ -169,7 +169,7 @@ Desktop CAD, GIS, and vector design applications (**Rhino**, **Grasshopper**, **
 
 ## 4. Universal Installation & Repository Layout
 
-Clone this repository, then run the universal installer or copy the `skills/*` folders into **your host's skill root** (same architecture as [`iscvlab/boostx`](https://github.com/iscvlab/boostx/releases/tag/v3.2.0)):
+Clone this repository, then run the universal installer or copy the `skills/*` folders into **your host's skill root** (same architecture as [`iscvlab/boostx`](https://github.com/iscvlab/boostx/releases/tag/v3.3.0)):
 
 | Host / Agent Platform | Global Skill Root | Workspace Skill Root |
 |:---|:---|:---|
@@ -243,7 +243,7 @@ mcp-bridges/
 
 ## 5. Related Toolkits, Author & License
 
-* **[boostx v3.2.0](https://github.com/iscvlab/boostx/releases/tag/v3.2.0)**: Composable 14-skill `/x*` AI agent ecosystem (`/xboost`, `/xbrief`, `/xcontext`, `/xcreate-skill`, `/xdeep-research`, `/xkickoff`, `/xlaya`, `/xobsidian`, `/xocr`, `/xplan`, `/xpublish-audit`, `/xpublish-qgis`, `/xsync`, `/xultra`).
+* **[boostx v3.3.0](https://github.com/iscvlab/boostx/releases/tag/v3.3.0)**: Composable 14-skill `/x*` AI agent ecosystem (`/xboost`, `/xbrief`, `/xcontext`, `/xcreate-skill`, `/xdeep-research`, `/xkickoff`, `/xlaya`, `/xobsidian`, `/xocr`, `/xplan`, `/xpublish-audit`, `/xpublish-qgis`, `/xsync`, `/xultra`).
 * **[xocr v2.1.0](https://github.com/iscvlab/xocr)**: High-speed C++ PyMuPDF vector/table extractor, Two-Stage LaTeX `booktabs` & scanned HTML `<table>` → RFC-4180 CSV surgery (`19-97 ms/page`, `15.0×-3,326×` faster hybrid routing), Thai PUA/Sara-Am normalizer, and 4-Tier local `SCB 10X Typhoon-OCR v1.5` (`Qwen3-VL`) & `baidu/Unlimited-OCR-2` engine (**[Upstream PR #15 to `scb-10x/typhoon-ocr`](https://github.com/scb-10x/typhoon-ocr/pull/15)**).
 * **[qgis-axonometric-transformer v1.2.2](https://plugins.qgis.org/plugins/axonometric_transformer/)**: Official QGIS plugin (Plugin ID: `6219`) for 1-click isometric, dimetric, and oblique axonometric map diagrams.
 

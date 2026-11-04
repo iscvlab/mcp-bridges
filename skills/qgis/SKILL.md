@@ -14,20 +14,22 @@ This skill enables direct AI agent interaction with active **QGIS Desktop** sess
 Before executing any QGIS operation, perform the following verification steps:
 
 1. **Verify MCP Server Configuration** (Dual-OS Support: macOS & Windows):
-   - **macOS**: `uvx` is typically at `~/.local/bin/uvx` or installed via Homebrew. In `~/.gemini/config/mcp_config.json`:
+   - **Unified Cross-OS Launcher (`mcp_config.json`)**: Uses a dynamic `node -e` resolver that automatically locates `uvx` across Windows (`%USERPROFILE%\.local\bin\uvx.exe`, `%USERPROFILE%\.cargo\bin\uvx.exe`) and macOS/Linux (`~/.local/bin/uvx`, `~/.cargo/bin/uvx`, `/opt/homebrew/bin/uvx`, `/usr/local/bin/uvx`):
      ```json
      "qgis": {
-       "command": "/Users/<user>/.local/bin/uvx",
-       "args": ["--from", "git+https://github.com/nkarasiak/qgis-mcp", "qgis-mcp-server"]
+       "command": "node",
+       "args": [
+         "-e",
+         "const os=require('os'),fs=require('fs'),p=require('path'),cp=require('child_process'),h=os.homedir(),w=process.platform==='win32',e=w?'.exe':'',c=[p.join(h,'.local','bin','uvx'+e),p.join(h,'.cargo','bin','uvx'+e),'/opt/homebrew/bin/uvx','/usr/local/bin/uvx'].find(x=>fs.existsSync(x))||('uvx'+e);cp.spawn(c,process.argv.slice(1),{stdio:'inherit'}).on('exit',k=>process.exit(k??0));",
+         "--from",
+         "https://github.com/nkarasiak/qgis-mcp/archive/refs/heads/main.zip",
+         "qgis-mcp-server"
+       ]
      }
      ```
-   - **Windows**: In `%USERPROFILE%/.gemini/config/mcp_config.json`:
-     ```json
-     "qgis": {
-       "command": "%USERPROFILE%/.local/bin/uvx.exe",
-       "args": ["--from", "git+https://github.com/nkarasiak/qgis-mcp", "qgis-mcp-server"]
-     }
-     ```
+   - **Direct Binary Paths** (when configuring single-OS runners):
+     - **macOS**: `~/.local/bin/uvx` or `/opt/homebrew/bin/uvx`
+     - **Windows**: `%USERPROFILE%/.local/bin/uvx.exe`
    - Grok CLI: `grok mcp add qgis -- uvx --from git+https://github.com/nkarasiak/qgis-mcp qgis-mcp-server`
    - Drive QGIS only through native MCP tools. Do not wrap `QgisMCPClient` in a terminal `python` blob unless MCP tools are unavailable.
 2. **Verify QGIS Desktop & MCP Plugin Server**:
