@@ -1,6 +1,6 @@
 # MCP Bridges (iscvlab/mcp-bridges)
 
-> Production CAD, GIS, and vector design Model Context Protocol (MCP) skill suite for AI coding agents across Rhinoceros 3D, Grasshopper (GH1), QGIS Desktop (PyQGIS), Adobe Illustrator, and Figma, hardened with `/xultra` Single-Mouse GUI serialization.
+> Production CAD, GIS, and vector design Model Context Protocol (MCP) skill suite for AI coding agents across Rhinoceros 3D, Grasshopper (GH1), QGIS Desktop (PyQGIS), Adobe Illustrator, and Figma, hardened with `/xultra` Single-Mouse GUI serialization. Selected for the XERJ Corpus Hub (`hub.xerj.org`, `144` resolved `xerj autoindex` graph edges; upstream contributions in `xerj-org/xerj` PRs `#2922`–`#2927`).
 
 ## Quickstart & Universal Install
 
