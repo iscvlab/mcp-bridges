@@ -1,6 +1,6 @@
 ---
 name: illustrator
-description: Vector graphics authoring, artboard layout, typographic hierarchy, color swatches, layer manipulation, and diagram/plate production via Adobe Illustrator MCP (/illustrator). Use when inspecting, creating, styling, or exporting Illustrator (.ai, .eps, .pdf, .svg) files. Do NOT use for 3D Rhino modeling (/rhino) or Figma UI sync (/figma).
+description: Vector graphics authoring, artboard layout, typographic hierarchy, color swatches, layer manipulation, and diagram/plate production via Adobe Illustrator MCP (/illustrator). Use when inspecting, creating, styling, or exporting Illustrator (.ai/.eps/.pdf/.svg) files. Do NOT use for 3D Rhino modeling (/rhino) or Figma UI sync (/figma).
 ---
 
 # Adobe Illustrator Master Plate & Vector Design Workflow (`/illustrator`)

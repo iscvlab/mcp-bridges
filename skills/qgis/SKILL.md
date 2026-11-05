@@ -1,6 +1,6 @@
 ---
 name: qgis
-description: Geospatial analysis, layer inspection, geoprocessing, cartographic styling, print layouts, and CAD/Grasshopper export via QGIS MCP (/qgis). Use when inspecting, styling, analyzing, or exporting QGIS layers, maps, or projects. Do NOT use for standalone Leaflet or Turf.js web maps or pure Rhino 3D modeling (/rhino).
+description: Geospatial analysis, layer inspection, geoprocessing, cartographic styling, print layouts, and CAD/Grasshopper export via QGIS MCP (/qgis). Use when inspecting, styling, analyzing, or exporting QGIS layers, maps, or projects. Do NOT use for standalone Leaflet/Turf.js web maps or pure Rhino 3D modeling (/rhino).
 ---
 
 # QGIS Geospatial Intelligence & Automation Workflow (`/qgis`)
@@ -263,12 +263,12 @@ print(f"Layer: {layer.name()} | Nodes: {len(nodes)} | CRS: {layer.crs().authid()
 
 ---
 
-## 5. Composable `/xboost`, `/xpublish-qgis` & `/xultra` Elastic Cognitive Swarm (Anti-"Multiple-Mouses" QGIS Gate)
+## 5. Composable `/xboost`, `/xpublish` & `/xultra` Elastic Cognitive Swarm (Anti-"Multiple-Mouses" QGIS Gate)
 
 Because `QgsProject.instance()`, `QgsLayerTreeRegistryBridge`, and the `iface.mapCanvas()` renderer run on a **single main Qt GUI thread** inside each QGIS instance (and SIP pointers can segfault under concurrent mutation), parallel subagents must never issue concurrent live MCP mutations against the same `instance`.
 
 | Chained Skill | Synergy & Execution Handoff |
 |:---|:---|
 | **`/qgis` + `/xboost`** | **Falsifiable Spatial & Cartographic Loop**: Formulate CRS/feature-count/symbology invariants first, run the Lean 1-Line QA Probe (§3.2), and verify `len(proj.mapLayers())` before saving. |
-| **`/qgis` + `/xpublish-qgis`** | **Plugin Packaging Handoff**: When authoring or testing a custom PyQGIS plugin inside QGIS, hand off to `/xpublish-qgis` for deterministic Qt6/QGIS 4 lint auditing and single-root `.zip` release packaging. |
+| **`/qgis` + `/xpublish`** | **Plugin Packaging Handoff**: When authoring or testing a custom PyQGIS plugin inside QGIS, hand off to `/xpublish` (`--platform qgis`, alias `/xpublish-qgis`) for deterministic Qt6/QGIS 4 lint auditing (`check_qt6.py`) and single-root `.zip` release packaging (`package_qgis.py`). |
 | **`/qgis` + `/xultra`** | **Anti-"Multiple-Mouses" QGIS Serialization Gate**: Never allow `N > 1` parallel subagents to call `execute_code`, `add_*_layer`, `apply_style_qml`, or layer-tree moves on the same QGIS `instance` simultaneously. Use one of two safe patterns:<br>1. **Offline GeoPackage / `.qml` Sharding + Serialized Bridge Insertion (Default)**: Parallel Builders run offline spatial scripts (`geopandas`, `shapely`, `pyproj`, `gdal`) or author `.qml` style XML files in isolated disk paths (`Pointer-Not-Payload`); the single Coordinator then attaches the finished `.gpkg`/`.geojson` layers and `.qml` files sequentially to the live `QgsProject.instance()` while guarding `layerTreeRegistryBridge()`.<br>2. **Multi-Instance Window Isolation (`instance`)**: If `list_qgis_instances` reports multiple open QGIS windows on distinct `.qgz` copies, bind each subagent to its own dedicated `instance` ID. |
