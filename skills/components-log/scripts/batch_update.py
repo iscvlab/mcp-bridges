@@ -12,17 +12,14 @@ def find_latest_components(workspace_dir):
     cs_files = []
     skip_dirs = {
         "TestCompile",
-        ".git",
-        ".agents",
-        ".gemini",
-        ".grok",
-        ".claude",
         "node_modules",
         "bin",
         "obj",
     }
     for root, dirs, files in os.walk(workspace_dir):
-        dirs[:] = [d for d in dirs if d not in skip_dirs]
+        dirs[:] = [
+            d for d in dirs if d not in skip_dirs and not d.startswith(".")
+        ]
         for file in files:
             if file.endswith(".cs") and "backup" not in file.lower():
                 filepath = os.path.join(root, file)

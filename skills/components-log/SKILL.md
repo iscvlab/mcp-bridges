@@ -15,27 +15,17 @@ Maintain a centralized components registry log (`components_log.md` and `compone
 Read and display `components_log.md` from the active workspace root.
 
 ### 2. Update Single Component (`/updatelog <filepath>`)
-Parse the specified C# component file and update `components_log.json` and `components_log.md` in the workspace root:
+Parse the specified C# component file and update `components_log.json` and `components_log.md` in the workspace root (`<SKILL_DIR>` is the directory containing this `SKILL.md`):
 
-* **Windows (PowerShell)**:
-  ```powershell
-  python "$env:USERPROFILE\.gemini\config\skills\components-log\scripts\update_log.py" "<workspace_root>" "<filepath>"
-  ```
-* **macOS / Linux**:
-  ```bash
-  python3 ~/.gemini/config/skills/components-log/scripts/update_log.py "<workspace_root>" "<filepath>"
-  ```
+```bash
+python "<SKILL_DIR>/scripts/update_log.py" "<workspace_root>" "<filepath>"
+```
 
 ### 3. Batch Update All Latest Components
 Scan the workspace for the highest-versioned C# script components (`<Prefix>_<Name>_v<N>.cs` or `<Name>_v<N>.cs`) containing `RunScript` and rebuild the registry:
 
-* **Windows (PowerShell)**:
-  ```powershell
-  python "$env:USERPROFILE\.gemini\config\skills\components-log\scripts\batch_update.py" "<workspace_root>"
-  ```
-* **macOS / Linux**:
-  ```bash
-  python3 ~/.gemini/config/skills/components-log/scripts/batch_update.py "<workspace_root>"
-  ```
+```bash
+python "<SKILL_DIR>/scripts/batch_update.py" "<workspace_root>"
+```
 
 If a command fails, report the stderr diagnostic and ask the user for guidance.

@@ -14,7 +14,7 @@ This skill automates the bidirectional design-to-code workflow between Figma and
 Before executing any sync operations, perform the following verification steps:
 
 1. **Check Figma MCP Server Configuration** (Dual-OS Support: macOS & Windows):
-   - Supports either the **Figma Desktop MCP** server (`figma_desktop`) or **Framelink `figma-developer-mcp`** in `~/.gemini/config/mcp_config.json` (macOS/Linux) or `%USERPROFILE%/.gemini/config/mcp_config.json` (Windows):
+   - Supports either the **Figma Desktop MCP** server (`figma_desktop`) or **Framelink `figma-developer-mcp`** in your AI agent's MCP configuration (`mcp_config.json` or `.mcp.json`):
      ```json
      "figma": {
        "command": "npx",
@@ -24,8 +24,8 @@ Before executing any sync operations, perform the following verification steps:
        }
      }
      ```
-   - Grok CLI (both macOS & Windows):
-     `grok mcp add figma -e FIGMA_API_KEY=<token> -- npx -y figma-developer-mcp --stdio`
+   - CLI Agent MCP Registration (macOS & Windows):
+     `<agent-cli> mcp add figma -e FIGMA_API_KEY=<token> -- npx -y figma-developer-mcp --stdio`
    - If the token is missing, create a Personal Access Token (`file_content:read`) at *Figma Settings → Security / Personal Access Tokens*.
    - Note: Do NOT use the deprecated `@modelcontextprotocol/server-figma` package.
 2. **Check Target HTML File**:

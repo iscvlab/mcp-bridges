@@ -1,4 +1,4 @@
-# MCP Bridges — Universal Installer (Windows PowerShell)
+# MCP Bridges - Universal Installer (Windows PowerShell)
 # Copies the 7 creative, CAD & spatial MCP bridge skills into host skill roots on this machine.
 
 param(
@@ -8,7 +8,8 @@ param(
     [switch]$Agents,
     [switch]$Codex,
     [switch]$All,
-    [string]$Workspace = ""
+    [string]$Workspace = "",
+    [string]$Target = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -16,7 +17,7 @@ $ScriptDir = Split-Path -Parent $PSScriptRoot
 $SkillsSrc = Join-Path $ScriptDir "skills"
 
 Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "  ⚡ MCP Bridges (7 Skills) — Windows Installer" -ForegroundColor Cyan
+Write-Host "  * MCP Bridges (7 Skills) - Windows Installer" -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host "Source: $SkillsSrc"
 
@@ -61,11 +62,11 @@ function Install-Skills([string]$TargetDir, [string]$PlatformName) {
     $physTarget = Resolve-PhysicalPath $TargetDir
     $physSrc = Resolve-PhysicalPath $SkillsSrc
     if ($physTarget -eq $physSrc) {
-        Write-Host "`nSkipping $PlatformName ($TargetDir) — source and destination resolve to the same physical directory." -ForegroundColor DarkGray
+        Write-Host "`nSkipping $PlatformName ($TargetDir) - source and destination resolve to the same physical directory." -ForegroundColor DarkGray
         return
     }
     if ($installedPhysicalDirs.ContainsKey($physTarget)) {
-        Write-Host "`nSkipping $PlatformName ($TargetDir) — physical directory already updated via $($installedPhysicalDirs[$physTarget])." -ForegroundColor DarkGray
+        Write-Host "`nSkipping $PlatformName ($TargetDir) - physical directory already updated via $($installedPhysicalDirs[$physTarget])." -ForegroundColor DarkGray
         return
     }
     $installedPhysicalDirs[$physTarget] = $PlatformName
@@ -77,22 +78,33 @@ function Install-Skills([string]$TargetDir, [string]$PlatformName) {
         $dest = Join-Path $TargetDir $skillName
 
         if ((Test-Path $dest) -and ((Resolve-PhysicalPath $_.FullName) -eq (Resolve-PhysicalPath $dest))) {
-            Write-Host "  ✓ Skipped /$skillName (source == destination)" -ForegroundColor DarkGray
+            Write-Host "  [OK] Skipped /$skillName (source == destination)" -ForegroundColor DarkGray
             return
         }
 
         if (Test-Path $dest) {
-            Remove-Item $dest -Recurse -Force
+            Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
+            if (Test-Path $dest) {
+                cmd /c "rmdir /s /q `"$dest`"" 2>$null
+            }
         }
 
         # Copy as real directory to prevent nested junction recursion limits
-        Copy-Item $_.FullName $dest -Recurse -Force
-        Write-Host "  ✓ Installed /$skillName" -ForegroundColor Green
+        if (Test-Path $dest) {
+            Copy-Item (Join-Path $_.FullName "*") $dest -Recurse -Force
+        } else {
+            Copy-Item $_.FullName $dest -Recurse -Force
+        }
+        Write-Host "  [OK] Installed /$skillName" -ForegroundColor Green
     }
 }
 
-$noHostFlag = -not $Antigravity.IsPresent -and -not $Claude.IsPresent -and -not $Grok.IsPresent -and -not $Agents.IsPresent -and -not $Codex.IsPresent -and [string]::IsNullOrEmpty($Workspace)
-$installAll = $All.IsPresent -or $noHostFlag
+$customTarget = if (-not [string]::IsNullOrEmpty($Target)) { $Target } elseif ($env:AGENT_SKILLS_DIR) { $env:AGENT_SKILLS_DIR } else { "" }
+$noHostFlag = -not $Antigravity.IsPresent -and -not $Claude.IsPresent -and -not $Grok.IsPresent -and -not $Agents.IsPresent -and -not $Codex.IsPresent -and [string]::IsNullOrEmpty($Workspace) -and [string]::IsNullOrEmpty($customTarget)
+
+if (-not [string]::IsNullOrEmpty($customTarget)) {
+    Install-Skills $customTarget "Custom Agent Target ($customTarget)"
+}
 
 # 1. Google Antigravity
 $geminiDir = Join-Path $env:USERPROFILE ".gemini\config\skills"
@@ -113,14 +125,28 @@ if ($Grok.IsPresent -or $All.IsPresent -or ($noHostFlag -and (Test-Path $grokHom
     Install-Skills $grokDir "Grok"
 }
 
-# 4. Cursor / Codex / Windsurf (~/.agents/skills & ~/.codex/skills)
+# 4. Universal ~/.agents/skills & ~/.codex/skills (Cursor / Codex / Windsurf / Local LLM Agents)
 $agentsDir = Join-Path $env:USERPROFILE ".agents\skills"
 if ($Agents.IsPresent -or $All.IsPresent -or ($noHostFlag -and (Test-Path (Join-Path $env:USERPROFILE ".agents")))) {
-    Install-Skills $agentsDir "Cursor / Codex / Windsurf (.agents)"
+    Install-Skills $agentsDir "Universal .agents (Cursor / Codex / Windsurf / Local LLM Agents)"
 }
 $codexDir = Join-Path $env:USERPROFILE ".codex\skills"
 if ($Codex.IsPresent -or $All.IsPresent -or ($noHostFlag -and (Test-Path (Join-Path $env:USERPROFILE ".codex")))) {
     Install-Skills $codexDir "Codex (.codex)"
+}
+
+if ($All.IsPresent -or $noHostFlag) {
+    Get-ChildItem -Directory -Force $env:USERPROFILE -ErrorAction SilentlyContinue | Where-Object { $_.Name.StartsWith(".") } | ForEach-Object {
+        foreach ($sub in @("skills", "config\skills")) {
+            $cand = Join-Path $_.FullName $sub
+            if (Test-Path $cand) {
+                $physCand = Resolve-PhysicalPath $cand
+                if (-not $installedPhysicalDirs.ContainsKey($physCand)) {
+                    Install-Skills $cand "Auto-Discovered Agent ($($_.Name)/$($sub.Replace('\', '/')))"
+                }
+            }
+        }
+    }
 }
 
 # 5. Workspace
@@ -138,5 +164,5 @@ if (-not [string]::IsNullOrEmpty($Workspace) -and (Test-Path $Workspace)) {
 }
 
 Write-Host "`n============================================================" -ForegroundColor Cyan
-Write-Host "  ✓ Installation Complete! All 7 skills ready to trigger." -ForegroundColor Green
+Write-Host "  [OK] Installation Complete! All 7 skills ready to trigger." -ForegroundColor Green
 Write-Host "============================================================" -ForegroundColor Cyan

@@ -1,12 +1,18 @@
 # MCP Bridges (iscvlab/mcp-bridges)
 
-> Production CAD, GIS, and vector design Model Context Protocol (MCP) skill suite for AI coding agents across Rhinoceros 3D, Grasshopper (GH1), QGIS Desktop (PyQGIS), Adobe Illustrator, and Figma, hardened with `/xultra` Single-Mouse GUI serialization. Selected for the XERJ Corpus Hub (`hub.xerj.org`, `144` resolved `xerj autoindex` graph edges; upstream contributions in `xerj-org/xerj` PRs `#2922`–`#2927`).
+> Production CAD, GIS, and vector design Model Context Protocol (MCP) skill suite for **any AI coding agent — cloud, IDE, CLI, or local LLM (`Ollama`, `vLLM`, `LM Studio`, `OpenHands`, `Cline`, `Continue`, `Aider`, `Claude Code`, `Codex`, `Cursor`, `Grok`, `Gemini / Antigravity`, or custom agent frameworks)** on **Windows, macOS, and Linux** across Rhinoceros 3D, Grasshopper (GH1), QGIS Desktop (PyQGIS), Adobe Illustrator, and Figma, hardened with `/xultra` Single-Mouse GUI serialization. Selected for the XERJ Corpus Hub (`hub.xerj.org`, `144` resolved `xerj autoindex` graph edges; upstream contributions in `xerj-org/xerj` PRs `#2922`–`#2927`).
+
+## One-Prompt Universal Agent Install
+
+```text
+Install iscvlab/mcp-bridges (https://github.com/iscvlab/mcp-bridges): detect my OS and your active global or workspace skills directory, clone the repository, install the 7 CAD/GIS/Vector MCP skills (Windows: ./scripts/install.ps1 -All; macOS/Linux: ./scripts/install.sh --all; or copy skills/* directly into your active skills folder), check which desktop MCP servers (Rhino, Grasshopper, QGIS, Illustrator, Figma) are configured in my MCP settings, and report what was verified vs. what still needs a live desktop session.
+```
 
 ## Quickstart & Universal Install
 
-- [README.md](README.md): Architecture, measured benchmarks, one-prompt agent installer, and host verification table (`tested` on Antigravity Windows 11; `spec-compatible` across Claude Code, Codex, Cursor, and Grok).
-- [scripts/install.ps1](scripts/install.ps1): Windows PowerShell installer (`./scripts/install.ps1 -All`).
-- [scripts/install.sh](scripts/install.sh): macOS and Linux installer (`./scripts/install.sh --all`, copies directories by default for `xerj autoindex --skills` compatibility).
+- [README.md](README.md): Architecture, measured benchmarks, one-prompt agent installer, and universal agent verification table (`tested` on Antigravity Windows 11; `spec-compatible` across Claude Code, Codex, Cursor, Grok, and local LLM agents).
+- [scripts/install.ps1](scripts/install.ps1): Windows PowerShell installer (`./scripts/install.ps1 -All` or `-Target <dir>`).
+- [scripts/install.sh](scripts/install.sh): macOS and Linux installer (`./scripts/install.sh --all` or `--target <dir>`, copies directories by default for `xerj autoindex --skills` compatibility).
 
 ## Skills & Reference Documentation
 

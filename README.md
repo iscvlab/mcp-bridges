@@ -3,12 +3,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Bridges](https://img.shields.io/badge/Bridges-7_CAD_%E2%80%A2_GIS_%E2%80%A2_UI_Skills-005FB8)](#2-supported-creative-cad--spatial-mcp-bridges-7-skills)
 [![Swarm Safety](https://img.shields.io/badge/Swarm_Safety-Parallel--Brains_Single--Mouse-059669)](#3-elastic-cognitive-swarm-xultra-anti-multiple-mouses-live-mcp-serialization)
-[![Platforms](https://img.shields.io/badge/Platforms-Claude_•_Grok_•_Gemini_•_Cursor_•_Codex-8A2BE2)](#4-universal-installation)
-[![Dual-OS](https://img.shields.io/badge/Dual--OS-Windows_•_macOS_•_Linux-success)](#4-universal-installation)
+[![Agents](https://img.shields.io/badge/Agents-Any_AI_Agent_(Cloud_•_IDE_•_CLI_•_Local_LLM)-8A2BE2)](#4-universal-installation--repository-layout)
+[![Dual-OS](https://img.shields.io/badge/Dual--OS-Windows_•_macOS_•_Linux-success)](#4-universal-installation--repository-layout)
 [![XERJ Corpus Hub](https://img.shields.io/badge/XERJ_Corpus_Hub-Selected_•_144_Graph_Edges-D97706)](https://hub.xerj.org)
 [![Verification](https://img.shields.io/badge/Protocol-BoostX_Verified_✓-emerald)](#3-elastic-cognitive-swarm-xultra-anti-multiple-mouses-live-mcp-serialization)
 
-**MCP Bridges** (`iscvlab/mcp-bridges`) is a production-grade **Model Context Protocol (MCP) & desktop CAD/GIS/Design automation suite** engineered by **[ISCV | Isocurve Research Lab (`@iscvlab`)](https://github.com/iscvlab)** and **selected for the [XERJ Corpus Hub](https://hub.xerj.org)** (`144` resolved graph edges via `xerj autoindex`). It connects AI coding agents across **Claude Code, Grok, Google Gemini / Antigravity, Cursor, and Codex** directly to live desktop sessions of **McNeel Rhinoceros 3D (`/rhino`, `/rhino-alias`)**, **Grasshopper (`/grasshopper`, `/components-log`)**, **QGIS Desktop (`/qgis`)**, **Adobe Illustrator (`/illustrator`)**, and **Figma (`/figma`)**—hardened with **Elastic Cognitive Swarm (`/xultra`) Anti-"Multiple-Mouses" Live MCP Serialization**.
+**MCP Bridges** (`iscvlab/mcp-bridges`) is a production-grade **Model Context Protocol (MCP) & desktop CAD/GIS/Design automation suite** engineered by **[ISCV | Isocurve Research Lab (`@iscvlab`)](https://github.com/iscvlab)** and **selected for the [XERJ Corpus Hub](https://hub.xerj.org)** (`144` resolved graph edges via `xerj autoindex`). It connects **any AI coding agent — cloud, IDE, CLI, or local LLM (`Ollama`, `vLLM`, `LM Studio`, `OpenHands`, `Cline`, `Continue`, `Aider`, `Claude Code`, `Codex`, `Cursor`, `Grok`, `Gemini / Antigravity`, or custom agent frameworks)** on **Windows, macOS, and Linux** directly to live desktop sessions of **McNeel Rhinoceros 3D (`/rhino`, `/rhino-alias`)**, **Grasshopper (`/grasshopper`, `/components-log`)**, **QGIS Desktop (`/qgis`)**, **Adobe Illustrator (`/illustrator`)**, and **Figma (`/figma`)**—hardened with **Elastic Cognitive Swarm (`/xultra`) Anti-"Multiple-Mouses" Live MCP Serialization**.
 
 Sister toolkits & upstream contributions: **[boostx](https://github.com/iscvlab/boostx)** (13-Skill `/x*` Agent Ecosystem & 8 Python CLI Engines) · **[xocr](https://github.com/iscvlab/xocr)** (Hybrid Document AI, Two-Stage LaTeX `booktabs` & HTML Table Surgery, and Local `SCB 10X Typhoon-OCR v1.5` × `Baidu Unlimited-OCR-2` Engine · **[Upstream PR #15 to `scb-10x/typhoon-ocr`](https://github.com/scb-10x/typhoon-ocr/pull/15)**) · **[Upstream PRs #2922–#2927 to `xerj-org/xerj`](https://github.com/xerj-org/xerj/pulls?q=is%3Apr+author%3Anapattan)** (Antigravity MCP verification [`#2923`](https://github.com/xerj-org/xerj/pull/2923)/[`#2927`](https://github.com/xerj-org/xerj/pull/2927), Gemini & Antigravity skill root discovery [`#2926`](https://github.com/xerj-org/xerj/pull/2926), legacy Thai PDF PUA normalization [`#2925`](https://github.com/xerj-org/xerj/pull/2925), and Windows MSVC unit tests [`#2924`](https://github.com/xerj-org/xerj/pull/2924)).
 
@@ -24,10 +24,10 @@ Sister toolkits & upstream contributions: **[boostx](https://github.com/iscvlab/
   * **Geospatial & Cartography**: `/qgis` (live PyQGIS, metric UTM `EPSG:32647` geoprocessing, `.qml` styling & SIP-safe layer tree surgery).
   * **Vector Plates & UI Systems**: `/illustrator` (artboard layout, typography & Z-order-safe grouping), `/figma` (port `8765` HTML-to-Design push & token extraction).
 
-Try it now with a **one-prompt agent install** (copy and paste into your AI coding chat):
+Try it now with a **one-prompt agent install** (copy and paste into any AI coding agent):
 
 ```text
-Install iscvlab/mcp-bridges (https://github.com/iscvlab/mcp-bridges): detect my OS and active AI host skill root, clone the repository, install the 7 CAD/GIS/Vector MCP skills into my skill directory (Windows: ./scripts/install.ps1; macOS/Linux: ./scripts/install.sh), check which desktop MCP servers (Rhino, Grasshopper, QGIS, Illustrator, Figma) are configured in my MCP settings, and report what was verified vs. what still needs a live desktop session.
+Install iscvlab/mcp-bridges (https://github.com/iscvlab/mcp-bridges): detect my OS and your active global or workspace skills directory, clone the repository, install the 7 CAD/GIS/Vector MCP skills (Windows: ./scripts/install.ps1 -All; macOS/Linux: ./scripts/install.sh --all; or copy skills/* directly into your active skills folder), check which desktop MCP servers (Rhino, Grasshopper, QGIS, Illustrator, Figma) are configured in my MCP settings, and report what was verified vs. what still needs a live desktop session.
 ```
 
 ### Horizontal Bar Comparison (Live Desktop MCP Automation vs. Unguarded / Manual Baseline)
@@ -176,22 +176,33 @@ Desktop CAD, GIS, and vector design applications (**Rhino**, **Grasshopper**, **
 
 ## 4. Universal Installation & Repository Layout
 
-Clone this repository, then run the universal installer or copy the `skills/*` folders into **your host's skill root** (same architecture as [`iscvlab/boostx`](https://github.com/iscvlab/boostx)). Following zero-cheat verification standards (`tested` = live E2E runtime verified; `spec-compatible` = standard skill frontmatter structure transcribed to the client's documented skill path):
+Every skill in `mcp-bridges` uses portable Markdown (`SKILL.md`) with standard YAML frontmatter (`name` + `description`), working across **any AI coding agent — cloud, IDE, CLI, or local LLM (`Ollama`, `vLLM`, `LM Studio`, `OpenHands`, `Cline`, `Continue`, `Aider`, `Claude Code`, `Codex`, `Cursor`, `Grok`, `Gemini / Antigravity`, or custom agent frameworks)** on **Windows, macOS, and Linux** (same architecture as [`iscvlab/boostx`](https://github.com/iscvlab/boostx)). Following zero-cheat verification standards (`tested` = live E2E runtime verified; `spec-compatible` = standard skill frontmatter structure transcribed to the client's documented skill path):
 
 | Host / Agent Platform | Global Skill Root | Workspace Skill Root | Verification Status |
 |:---|:---|:---|:---|
 | **Gemini / Antigravity** | `~/.gemini/config/skills` | `<repo>/.agents/skills` | **`tested`** (Live E2E verified on Windows 11 across Rhino `v0.3.0`, GH1, PyQGIS, Illustrator & Figma) |
 | **Claude Code** | `~/.claude/skills` | `<repo>/.claude/skills` | **`spec-compatible`** (Path & skill schema verified via `scripts/install.ps1` & `scripts/install.sh`; live host PRs welcome) |
-| **Cursor / Codex / Windsurf** | `~/.agents/skills` | `<repo>/.agents/skills` | **`spec-compatible`** (Path & skill schema verified via `scripts/install.ps1` & `scripts/install.sh`; live host PRs welcome) |
+| **Cursor / Codex / Windsurf** | `~/.agents/skills` / `~/.codex/skills` | `<repo>/.agents/skills` | **`spec-compatible`** (Path & skill schema verified via `scripts/install.ps1` & `scripts/install.sh`; live host PRs welcome) |
 | **Grok** | `$GROK_HOME/skills` or `~/.grok/skills` | `<repo>/.grok/skills` | **`spec-compatible`** (Path & skill schema verified via `scripts/install.ps1` & `scripts/install.sh`; live host PRs welcome) |
+| **Local LLM & Custom Agent Frameworks** (`Ollama`, `vLLM`, `LM Studio`, `OpenHands`, `Cline`, `Continue`, `Aider`) | `~/.agents/skills` or `$AGENT_SKILLS_DIR` (`-Target <dir>` / `--target <dir>`) | `<repo>/.agents/skills` | **`spec-compatible`** (Universal Markdown `SKILL.md` + MCP tool schemas; supports custom target directories via `-Target` / `--target`) |
 
-### Option A: Automated Multi-Host Installer (Recommended)
+### Option A: One-Prompt Copy-Paste Agent Install (Works with Any AI Agent — Cloud, IDE, CLI, or Local LLM)
+
+Copy and paste this single prompt into **any AI coding agent**:
+
+```text
+Install iscvlab/mcp-bridges (https://github.com/iscvlab/mcp-bridges): detect my OS and your active global or workspace skills directory, clone the repository, install the 7 CAD/GIS/Vector MCP skills (Windows: ./scripts/install.ps1 -All; macOS/Linux: ./scripts/install.sh --all; or copy skills/* directly into your active skills folder), check which desktop MCP servers (Rhino, Grasshopper, QGIS, Illustrator, Figma) are configured in my MCP settings, and report what was verified vs. what still needs a live desktop session.
+```
+
+### Option B: Automated Multi-Agent Installer (`install.ps1 -All` / `install.sh --all` / `-Target <dir>`)
 
 **Windows (PowerShell):**
 ```powershell
 git clone https://github.com/iscvlab/mcp-bridges
 cd mcp-bridges
 ./scripts/install.ps1 -All
+# Or install into any custom / local LLM agent directory:
+./scripts/install.ps1 -Target "$HOME/.continue/skills"
 ```
 
 **macOS / Linux (Bash / Zsh):**
@@ -200,12 +211,17 @@ git clone https://github.com/iscvlab/mcp-bridges
 cd mcp-bridges
 chmod +x scripts/install.sh
 ./scripts/install.sh --all
+# Or install into any custom / local LLM agent directory:
+./scripts/install.sh --target ~/.continue/skills
 ```
 
-### Option B: Direct Copy into a Specific Host Root
+### Option C: Direct Copy into Any Agent Skill Root (`~/.agents/skills`, `~/.<agent>/skills`, or `<repo>/.agents/skills`)
 
 ```bash
 git clone https://github.com/iscvlab/mcp-bridges
+
+# Universal .agents root (Cursor, Codex, Windsurf, Cline, OpenHands, Local LLM Agents)
+mkdir -p ~/.agents/skills && cp -r mcp-bridges/skills/* ~/.agents/skills/
 
 # Claude Code
 mkdir -p ~/.claude/skills && cp -r mcp-bridges/skills/* ~/.claude/skills/
@@ -216,8 +232,8 @@ mkdir -p ~/.grok/skills && cp -r mcp-bridges/skills/* ~/.grok/skills/
 # Google Gemini / Antigravity
 mkdir -p ~/.gemini/config/skills && cp -r mcp-bridges/skills/* ~/.gemini/config/skills/
 
-# Cursor / Codex / Windsurf / Project-local (.agents/skills)
-mkdir -p ~/.agents/skills && cp -r mcp-bridges/skills/* ~/.agents/skills/
+# Project-local workspace (.agents/skills)
+mkdir -p .agents/skills && cp -r mcp-bridges/skills/* .agents/skills/
 ```
 
 ### Repository Layout

@@ -14,9 +14,36 @@ echo "============================================================"
 echo "Source: $SKILLS_SRC"
 
 MODE="copy"
-if [ "$1" == "--symlink" ] || [ "$2" == "--symlink" ]; then
-    MODE="symlink"
-fi
+TARGET_DIR="${AGENT_SKILLS_DIR:-}"
+WORKSPACE_DIR=""
+FLAG=""
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --symlink)
+            MODE="symlink"
+            shift
+            ;;
+        --target)
+            TARGET_DIR="$2"
+            shift 2
+            ;;
+        --target=*)
+            TARGET_DIR="${1#*=}"
+            shift
+            ;;
+        --all|--claude|--antigravity|--grok|--agents|--codex)
+            FLAG="$1"
+            shift
+            ;;
+        *)
+            if [ -z "$WORKSPACE_DIR" ] && [ -d "$1" ]; then
+                WORKSPACE_DIR="$1"
+            fi
+            shift
+            ;;
+    esac
+done
 
 install_to() {
     local target_dir="$1"
@@ -47,42 +74,47 @@ install_to() {
 }
 
 NO_FLAG=false
-if [ -z "$1" ] || [ "$1" == "--symlink" ]; then
+if [ -z "$FLAG" ] && [ -z "$TARGET_DIR" ] && [ -z "$WORKSPACE_DIR" ]; then
     NO_FLAG=true
 fi
 
+# 0. Custom Agent Target (--target <dir> or $AGENT_SKILLS_DIR)
+if [ -n "$TARGET_DIR" ]; then
+    install_to "$TARGET_DIR" "Custom Agent Target ($TARGET_DIR)"
+fi
+
 # 1. Claude Code (~/.claude/skills)
-if [ "$1" == "--claude" ] || [ "$1" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.claude" ]; }; then
+if [ "$FLAG" == "--claude" ] || [ "$FLAG" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.claude" ]; }; then
     install_to "$HOME/.claude/skills" "Claude Code"
 fi
 
 # 2. Gemini / Antigravity (~/.gemini/config/skills)
-if [ "$1" == "--antigravity" ] || [ "$1" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.gemini" ]; }; then
+if [ "$FLAG" == "--antigravity" ] || [ "$FLAG" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.gemini" ]; }; then
     install_to "$HOME/.gemini/config/skills" "Gemini / Antigravity"
 fi
 
 # 3. Grok (~/.grok/skills)
 GROK_ROOT="${GROK_HOME:-$HOME/.grok}"
-if [ "$1" == "--grok" ] || [ "$1" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$GROK_ROOT" ]; }; then
+if [ "$FLAG" == "--grok" ] || [ "$FLAG" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$GROK_ROOT" ]; }; then
     install_to "$GROK_ROOT/skills" "Grok"
 fi
 
-# 4. Cursor / Codex / Windsurf (~/.agents/skills & ~/.codex/skills)
-if [ "$1" == "--agents" ] || [ "$1" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.agents" ]; }; then
-    install_to "$HOME/.agents/skills" "Cursor / Codex / Windsurf (.agents)"
+# 4. Universal ~/.agents/skills & ~/.codex/skills (Cursor / Codex / Windsurf / Local LLM Agents)
+if [ "$FLAG" == "--agents" ] || [ "$FLAG" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.agents" ]; }; then
+    install_to "$HOME/.agents/skills" "Universal .agents (Cursor / Codex / Windsurf / Local LLM Agents)"
 fi
-if [ "$1" == "--codex" ] || [ "$1" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.codex" ]; }; then
+if [ "$FLAG" == "--codex" ] || [ "$FLAG" == "--all" ] || { [ "$NO_FLAG" == true ] && [ -d "$HOME/.codex" ]; }; then
     install_to "$HOME/.codex/skills" "Codex (.codex)"
 fi
 
 # 5. Target workspace if provided
-if [ -n "$2" ] && [ "$2" != "--symlink" ] && [ -d "$2" ]; then
-    install_to "$2/.agents/skills" "Workspace .agents ($2)"
-    if [ -d "$2/.claude" ] || [ "$1" == "--claude" ] || [ "$1" == "--all" ]; then
-        install_to "$2/.claude/skills" "Workspace .claude ($2)"
+if [ -n "$WORKSPACE_DIR" ] && [ -d "$WORKSPACE_DIR" ]; then
+    install_to "$WORKSPACE_DIR/.agents/skills" "Workspace .agents ($WORKSPACE_DIR)"
+    if [ -d "$WORKSPACE_DIR/.claude" ] || [ "$FLAG" == "--claude" ] || [ "$FLAG" == "--all" ]; then
+        install_to "$WORKSPACE_DIR/.claude/skills" "Workspace .claude ($WORKSPACE_DIR)"
     fi
-    if [ -d "$2/.grok" ] || [ "$1" == "--grok" ]; then
-        install_to "$2/.grok/skills" "Workspace .grok ($2)"
+    if [ -d "$WORKSPACE_DIR/.grok" ] || [ "$FLAG" == "--grok" ]; then
+        install_to "$WORKSPACE_DIR/.grok/skills" "Workspace .grok ($WORKSPACE_DIR)"
     fi
 fi
 

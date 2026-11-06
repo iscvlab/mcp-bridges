@@ -30,7 +30,7 @@ Before executing any QGIS operation, perform the following verification steps:
    - **Direct Binary Paths** (when configuring single-OS runners):
      - **macOS**: `~/.local/bin/uvx` or `/opt/homebrew/bin/uvx`
      - **Windows**: `%USERPROFILE%/.local/bin/uvx.exe`
-   - Grok CLI: `grok mcp add qgis -- uvx --from git+https://github.com/nkarasiak/qgis-mcp qgis-mcp-server`
+   - **CLI Agent MCP Registration**: `<agent-cli> mcp add qgis -- uvx --from git+https://github.com/nkarasiak/qgis-mcp qgis-mcp-server`
    - Drive QGIS only through native MCP tools. Do not wrap `QgisMCPClient` in a terminal `python` blob unless MCP tools are unavailable.
 2. **Verify QGIS Desktop & MCP Plugin Server**:
    - Launching QGIS: On macOS, use `open -a QGIS-LTR` or open from `/Applications/QGIS-LTR.app`. On Windows, open via Start Menu or desktop shortcut.

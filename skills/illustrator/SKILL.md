@@ -14,15 +14,15 @@ This skill enables direct AI agent interaction with active **Adobe Illustrator**
 Before executing any Adobe Illustrator operation, perform the following verification steps:
 
 1. **Verify MCP Server Configuration** (Dual-OS Support: macOS & Windows):
-   - In `~/.gemini/config/mcp_config.json` (macOS/Linux) or `%USERPROFILE%/.gemini/config/mcp_config.json` (Windows):
+   - In your AI agent's MCP configuration (`mcp_config.json` or `.mcp.json`):
      ```json
      "illustrator": {
        "command": "npx",
        "args": ["-y", "illustrator-mcp-server"]
      }
      ```
-   - Grok CLI (both macOS & Windows):
-     `grok mcp add illustrator -- npx -y illustrator-mcp-server`
+   - CLI Agent MCP Registration (macOS & Windows):
+     `<agent-cli> mcp add illustrator -- npx -y illustrator-mcp-server`
 2. **Verify Adobe Illustrator Desktop Session**:
    - Ensure Adobe Illustrator (CC 2024 / 2025 or newer) is open on your desktop with the target `.ai` document loaded.
    - **macOS Note**: On first launch on macOS, macOS will request **Automation** permissions under *System Settings → Privacy & Security → Automation* to allow the Node process to communicate with Adobe Illustrator.
