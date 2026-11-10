@@ -80,6 +80,7 @@ Use this mode for high-performance geometric computation, custom algorithms, and
    - Both `run_python(script=..., slot=...)` and `run_csharp(script=..., slot=...)` inject **`__rhino_doc__`** as the target slot's `RhinoDoc` handle. **Always use `__rhino_doc__`** (never rely on `scriptcontext.doc`, `rhinoscriptsyntax`, or `RhinoDoc.ActiveDoc` in MCP scripts).
    - Use `System.Drawing.Color` and standard RhinoCommon types (`Rhino.Geometry.*`, `Rhino.DocObjects.*`).
    - Wrap enum lookups safely in Python 3 (e.g. `System.Enum.Parse(EnumClass, "Name")`).
+   - **External `rhino3dm` Pre-Merged Mesh Build + Rhino Pure-Viewer Law**: For procedural high-poly or modular meshes (`>100k` faces), compute and world-transform geometry in **external standalone Python + NumPy (`rhino3dm.File3dm`)**, merging meshes into **1 single-precision `rhino3dm.Mesh` per `(Layer, Material)` (`UseDoublePrecisionVertices = False`, `0` Block `InstanceDefinitions`)** before calling `open_doc`. Avoid importing `numpy` inside Rhino `run_python` (which can collide with `ladybug_tools` C-extensions on Windows) and avoid thousands of nested block instances (which bottleneck Rhino's CPU display pipeline).
 2. **High-Performance C# Scripting (`run_csharp`)**:
    - `System`, `System.Linq`, and `System.Collections.Generic` are pre-imported automatically.
    - Use `run_csharp` with `Parallel.For` and primitive array structures (`double[]`, `Point3d[]`) for point cloud processing, distance matrices, and voxel/mesh calculations, then commit results to `__rhino_doc__` on the main thread.
@@ -94,8 +95,9 @@ Use this mode to maintain clean layer organization and render materials:
    * **`01_BUILDINGS_FACILITIES`** *(Warm Amber `#d97706`)*: Existing structures, proposed architectural massing, and structural envelopes.
    * **`02_LANDSCAPE_DESIGN`** *(Emerald Green `#059669`)*: Hardscape outlines, paving patterns, planting envelopes, water edges, and grading earthworks.
    * **`03_ANNOTATION`** *(Sky Blue `#0284c7`)*: Section/elevation cut lines, spot levels, callout tags, and legend symbols.
-2. **Layer Render Material Assignment (`set_layer_material`)**:
+2. **Layer & Object Render Material Assignment (`set_layer_material` & `RenderMaterial`)**:
    - Call `set_layer_material(layer="Parent::Child", color="#059669", gloss=0.2, transparency=0.0, applyToLayerColor=true, slot=...)` to configure display/render materials and synchronize viewport wireframe colors.
+   - **Bitmap/Bump Texture Sync After `open_doc(clearFirst=true)`**: Because `open_doc(clearFirst=true)` clears `doc.Objects` while retaining prior entries in `doc.Materials`, never rely on `doc.Materials.Find(name, True)` returning the newly imported material index. Instead, bind `m.SetBitmapTexture(albedo_path)` and `m.SetBumpTexture(bump_path)` directly on `m = doc.Materials[obj.Attributes.MaterialIndex]`, create `rm = Rhino.Render.RenderMaterial.CreateBasicMaterial(m, doc)`, add `rm` to `doc.RenderMaterials`, and assign `obj.RenderMaterial = rm`.
 3. **Safe Layer Purge Protocol**:
    - In Rhino, block definitions (`__rhino_doc__.InstanceDefinitions`) may contain entities referencing otherwise empty CAD layers (e.g. `A-WALL`, `C-TOPO`).
    - **Remap before Purge**: Re-assign internal block entity `LayerIndex` to `Layer 0` via `idef.ModifyGeometry(...)` before calling `__rhino_doc__.Layers.Delete(idx, True)`.

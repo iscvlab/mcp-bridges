@@ -6,11 +6,11 @@
 [![Agents](https://img.shields.io/badge/Agents-Any_AI_Agent_(Cloud_•_IDE_•_CLI_•_Local_LLM)-8A2BE2)](#4-universal-installation--repository-layout)
 [![Dual-OS](https://img.shields.io/badge/Dual--OS-Windows_•_macOS_•_Linux-success)](#4-universal-installation--repository-layout)
 [![XERJ Corpus Hub](https://img.shields.io/badge/XERJ_Corpus_Hub-Selected_•_144_Graph_Edges-D97706)](https://hub.xerj.org)
-[![Verification](https://img.shields.io/badge/Protocol-BoostX_Verified_✓-emerald)](#3-elastic-cognitive-swarm-xultra-anti-multiple-mouses-live-mcp-serialization)
+[![Verification](https://img.shields.io/badge/Protocol-XBoost_Verified_✓-emerald)](#3-elastic-cognitive-swarm-xultra-anti-multiple-mouses-live-mcp-serialization)
 
 **MCP Bridges** (`iscvlab/mcp-bridges`) is a production-grade **Model Context Protocol (MCP) & desktop CAD/GIS/Design automation suite** engineered by **[ISCV | Isocurve Research Lab (`@iscvlab`)](https://github.com/iscvlab)** and **selected for the [XERJ Corpus Hub](https://hub.xerj.org)** (`144` resolved graph edges via `xerj autoindex`). It connects **any AI coding agent — cloud, IDE, CLI, or local LLM (`Ollama`, `vLLM`, `LM Studio`, `OpenHands`, `Cline`, `Continue`, `Aider`, `Claude Code`, `Codex`, `Cursor`, `Grok`, `Gemini / Antigravity`, or custom agent frameworks)** on **Windows, macOS, and Linux** directly to live desktop sessions of **McNeel Rhinoceros 3D (`/rhino`, `/rhino-alias`)**, **Grasshopper (`/grasshopper`, `/components-log`)**, **QGIS Desktop (`/qgis`)**, **Adobe Illustrator (`/illustrator`)**, and **Figma (`/figma`)**—hardened with **Elastic Cognitive Swarm (`/xultra`) Anti-"Multiple-Mouses" Live MCP Serialization**.
 
-Sister toolkits & upstream contributions: **[boostx](https://github.com/iscvlab/boostx)** (13-Skill `/x*` Agent Ecosystem & 8 Python CLI Engines) · **[xocr](https://github.com/iscvlab/xocr)** (Hybrid Document AI, Two-Stage LaTeX `booktabs` & HTML Table Surgery, and Local `SCB 10X Typhoon-OCR v1.5` × `Baidu Unlimited-OCR-2` Engine · **[Upstream PR #15 to `scb-10x/typhoon-ocr`](https://github.com/scb-10x/typhoon-ocr/pull/15)**) · **[Upstream PRs #2922–#2927 to `xerj-org/xerj`](https://github.com/xerj-org/xerj/pulls?q=is%3Apr+author%3Anapattan)** (Antigravity MCP verification [`#2923`](https://github.com/xerj-org/xerj/pull/2923)/[`#2927`](https://github.com/xerj-org/xerj/pull/2927), Gemini & Antigravity skill root discovery [`#2926`](https://github.com/xerj-org/xerj/pull/2926), legacy Thai PDF PUA normalization [`#2925`](https://github.com/xerj-org/xerj/pull/2925), and Windows MSVC unit tests [`#2924`](https://github.com/xerj-org/xerj/pull/2924)).
+Sister toolkits & upstream contributions: **[xboost](https://github.com/iscvlab/xboost)** (15-Skill `/x*` Agent Ecosystem & 9 Python CLI Engines, `v3.5.0`) · **[xocr](https://github.com/iscvlab/xocr)** (Hybrid Document AI, Two-Stage LaTeX `booktabs` & HTML Table Surgery, and Local `SCB 10X Typhoon-OCR v1.5` × `Baidu Unlimited-OCR-2` Engine · **[Upstream PR #15 to `scb-10x/typhoon-ocr`](https://github.com/scb-10x/typhoon-ocr/pull/15)**) · **[Upstream PRs #2922–#2927 to `xerj-org/xerj`](https://github.com/xerj-org/xerj/pulls?q=is%3Apr+author%3Anapattan)** (Antigravity MCP verification [`#2923`](https://github.com/xerj-org/xerj/pull/2923)/[`#2927`](https://github.com/xerj-org/xerj/pull/2927), Gemini & Antigravity skill root discovery [`#2926`](https://github.com/xerj-org/xerj/pull/2926), legacy Thai PDF PUA normalization [`#2925`](https://github.com/xerj-org/xerj/pull/2925), and Windows MSVC unit tests [`#2924`](https://github.com/xerj-org/xerj/pull/2924)).
 
 ---
 
@@ -160,7 +160,7 @@ mcp-bridges/
 
 ## 3. Elastic Cognitive Swarm (`/xultra`) Anti-"Multiple-Mouses" Live MCP Serialization
 
-Desktop CAD, GIS, and vector design applications (**Rhino**, **Grasshopper**, **QGIS**, **Adobe Illustrator**) run on a **single main UI thread** where active selection, undo stacks, viewport cameras, and canvas solvers are global singletons. When paired with [`/xultra`](https://github.com/iscvlab/boostx), every bridge in this repository enforces the **Anti-"Multiple-Mouses" Serialization Protocol**:
+Desktop CAD, GIS, and vector design applications (**Rhino**, **Grasshopper**, **QGIS**, **Adobe Illustrator**) run on a **single main UI thread** where active selection, undo stacks, viewport cameras, and canvas solvers are global singletons. When paired with [`/xultra`](https://github.com/iscvlab/xboost), every bridge in this repository enforces the **Anti-"Multiple-Mouses" Serialization Protocol**:
 
 1. **Multi-Slot / Multi-Instance Isolation (`spawn_slot` / `instance`)**:
    - In `/rhino` and `/grasshopper`, parallel `K`-vector tournament exploration spawns dedicated Rhino instances (`spawn_slot`) so each subagent binds exclusively to its own `slot`.
@@ -168,7 +168,7 @@ Desktop CAD, GIS, and vector design applications (**Rhino**, **Grasshopper**, **
 2. **Offline Compute Sharding + Single-Coordinator Live Applier (Default Single-Instance Mode)**:
    - Parallel Builders compute heavy geometry algorithms, `.cs` / `.py` scripts, `.gpkg` / `.qml` layers, or declarative `g1_apply_graph` JSON payloads in isolated workspace files (`Pointer-Not-Payload`) **without** calling live GUI mutation tools concurrently.
    - The single Coordinator (or designated Applier) then applies the verified artifacts to the live session sequentially—targeting disjoint layer subtrees (`Swarm::VectorA`), deferring Grasshopper solver passes (`solve=false` → single `g1_solve_graph`), guarding `QgsLayerTreeRegistryBridge`, and sharing a single local HTTP server on port `8765` for `/figma`.
-3. **Built with BoostX Production Invariants**:
+3. **Built with XBoost Production Invariants**:
    - **Zero Hardcoding Invariant**: All paths use portable environment variables (`%USERPROFILE%`, `%APPDATA%`, `~`) and POSIX forward slashes (`/`), verified by `audit_engine.py --platform skill` and `--platform github` (`0` Blocking, `0` Advisory).
    - **Dual-OS Parity**: Works identically on Windows PowerShell (`scripts/install.ps1`) and macOS/Linux Bash/Zsh (`scripts/install.sh`).
 
@@ -176,7 +176,7 @@ Desktop CAD, GIS, and vector design applications (**Rhino**, **Grasshopper**, **
 
 ## 4. Universal Installation & Repository Layout
 
-Every skill in `mcp-bridges` uses portable Markdown (`SKILL.md`) with standard YAML frontmatter (`name` + `description`), working across **any AI coding agent — cloud, IDE, CLI, or local LLM (`Ollama`, `vLLM`, `LM Studio`, `OpenHands`, `Cline`, `Continue`, `Aider`, `Claude Code`, `Codex`, `Cursor`, `Grok`, `Gemini / Antigravity`, or custom agent frameworks)** on **Windows, macOS, and Linux** (same architecture as [`iscvlab/boostx`](https://github.com/iscvlab/boostx)). Following zero-cheat verification standards (`tested` = live E2E runtime verified; `spec-compatible` = standard skill frontmatter structure transcribed to the client's documented skill path):
+Every skill in `mcp-bridges` uses portable Markdown (`SKILL.md`) with standard YAML frontmatter (`name` + `description`), working across **any AI coding agent — cloud, IDE, CLI, or local LLM (`Ollama`, `vLLM`, `LM Studio`, `OpenHands`, `Cline`, `Continue`, `Aider`, `Claude Code`, `Codex`, `Cursor`, `Grok`, `Gemini / Antigravity`, or custom agent frameworks)** on **Windows, macOS, and Linux** (same architecture as [`iscvlab/xboost`](https://github.com/iscvlab/xboost)). Following zero-cheat verification standards (`tested` = live E2E runtime verified; `spec-compatible` = standard skill frontmatter structure transcribed to the client's documented skill path):
 
 | Host / Agent Platform | Global Skill Root | Workspace Skill Root | Verification Status |
 |:---|:---|:---|:---|
@@ -264,7 +264,7 @@ mcp-bridges/
 
 ## 5. Related Toolkits, Author & License
 
-* **[boostx v3.4.0](https://github.com/iscvlab/boostx)**: Composable 13-skill `/x*` AI agent ecosystem (`/xboost`, `/xbrief`, `/xcontext`, `/xcreate-skill`, `/xdeep-research`, `/xkickoff`, `/xlaya`, `/xobsidian`, `/xocr`, `/xplan`, `/xpublish`, `/xsync`, `/xultra`).
+* **[xboost v3.5.0](https://github.com/iscvlab/xboost)**: Composable 15-skill `/x*` AI agent ecosystem (`/xboost`, `/xbrief`, `/xcontext`, `/xcreate-skill`, `/xdeep-research`, `/xkickoff`, `/xlaya`, `/xlearn`, `/xmouse`, `/xobsidian`, `/xocr`, `/xplan`, `/xpublish`, `/xsync`, `/xultra`).
 * **[xocr v2.1.0](https://github.com/iscvlab/xocr)**: High-speed C++ PyMuPDF vector/table extractor, Two-Stage LaTeX `booktabs` & scanned HTML `<table>` → RFC-4180 CSV surgery (`19-97 ms/page`, `15.0×-3,326×` faster hybrid routing), Thai PUA/Sara-Am normalizer, and 4-Tier local `SCB 10X Typhoon-OCR v1.5` (`Qwen3-VL`) & `baidu/Unlimited-OCR-2` engine (**[Upstream PR #15 to `scb-10x/typhoon-ocr`](https://github.com/scb-10x/typhoon-ocr/pull/15)** & **[Upstream PR #2925 to `xerj-org/xerj`](https://github.com/xerj-org/xerj/pull/2925)**).
 * **[xerj-org/xerj (Upstream PRs #2922–#2927)](https://github.com/xerj-org/xerj/pulls?q=is%3Apr+author%3Anapattan)**: Selected `iscvlab/mcp-bridges` for the [XERJ Corpus Hub](https://hub.xerj.org); contributed Gemini & Antigravity skill root auto-indexing ([PR #2926](https://github.com/xerj-org/xerj/pull/2926)), live Antigravity Windows 11 MCP verification (`22/22` tools in `2–3 ms`, [PR #2923](https://github.com/xerj-org/xerj/pull/2923) & [PR #2927](https://github.com/xerj-org/xerj/pull/2927)), legacy Thai PDF PUA normalization ([PR #2925](https://github.com/xerj-org/xerj/pull/2925)), and Windows MSVC unit test fixes ([PR #2924](https://github.com/xerj-org/xerj/pull/2924)).
 * **[qgis-axonometric-transformer v1.2.2](https://plugins.qgis.org/plugins/axonometric_transformer/)**: Official QGIS plugin (Plugin ID: `6219`) for 1-click isometric, dimetric, and oblique axonometric map diagrams.
